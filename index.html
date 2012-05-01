@@ -1,0 +1,48 @@
+<html>
+<head>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
+
+	<script src="js/tokens.js" type="text/javascript"></script>
+	<script src="js/agents.js" type="text/javascript"></script>
+	<script src="js/cadence.js" type="text/javascript"></script>
+	<script src="js/casm.js" type="text/javascript"></script>
+	<script src="js/visgraph.js" type="text/javascript"></script>
+	<script src="js/boolean.js" type="text/javascript"></script>
+
+	<script>
+	$(function() {
+		_("test a = ( new a = ( new ) )");
+		_("test b = ( new )");
+		_("test c = ( new )");
+		_("test d = ( new )");
+		_("test e = ( new )");
+		_("test f = ( new )");
+		_("test g is { test a }");
+		_("test h = ( new )");
+		_("test i = ( new )");
+		_("test j = ( new )");
+		_("test k = ( new )");
+		g = new CadenceGraph("test","cgraph");
+		$("#cgraph").draggable({ handle: "#graph-title"}).resizable();
+		$("#cterminal").draggable().resizable();
+	});
+	</script>
+</head>
+
+<body>
+<h1>JS-Cadence</h1>
+<div id="cgraph" style="width: 500px; height: 500px; border-width: 1px; border-color: black; border-style: solid;">
+<div id="graph-title" style="height: 20px; background-color: silver;"></div>
+</div>
+
+<div id="cterminal" style="border-width: 1px; border-color: black; border-style: solid;">
+<div id="casmoutput">undefined</div>
+<textarea id="casminput" rows="7" cols="80"></textarea><br/>
+<button onclick="document.getElementById('casmoutput').innerHTML = cadence.eval(document.getElementById('casminput').value); document.getElementById('casminput').value = '';">Execute</button>
+</div>
+
+
+
+</body>
+</html>
