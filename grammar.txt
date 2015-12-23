@@ -1,0 +1,34 @@
+Cadence Grammar
+
+PATH -> LABEL PATH' | ( PATH ) PATH'
+PATH' -> PATH | epsilon
+
+STATEMENT ->	  when WHEN
+				| PATH STATEMENT'
+				| { SCRIPT }
+				| action LABEL STATEMENT
+				| do DO
+STATEMENT' -> where PATH STATEMENT'' | STATEMENT''
+STATEMENT'' -> is PATH | = PATH | becomes PATH
+
+SCRIPT -> STATEMENT SCRIPT'
+SCRIPT' -> ; SCRIPT | epsilon
+
+DO -> LABEL DO'
+DO' -> PATH DO'' | epsilon
+DO'' -> , PATH DO'' | epsilon
+
+WHEN -> PATH STATEMENT
+
+IF -> PATH STATEMENT IF'
+IF' -> else STATEMENT | epsilon
+
+LABEL -> NUMBER | STRING | LIST | ALPHANUMERIC
+
+LIST -> [ LIST' ]
+LIST' -> PATH LIST'' | epsilon
+LIST'' -> , PATH LIST'' | epsilon
+
+STRING -> " STRING' "
+STRING' -> CHARACTER STRING' | epsilon
+
