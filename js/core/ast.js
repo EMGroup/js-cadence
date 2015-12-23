@@ -92,7 +92,11 @@ Cadence.AST.Definition.prototype.generate = function() {
 			lhs += "undefined";
 			params += this.lhs[i].label + ",";
 		} else {
-			lhs += "\""+this.lhs[i]+"\"";
+			if (typeof this.lhs[i] == "number") {
+				lhs += this.lhs[i];
+			} else {
+				lhs += "\""+this.lhs[i]+"\"";
+			}
 		}
 		if (i < this.lhs.length-1) {
 			lhs += ", ";
@@ -133,14 +137,19 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 	if (this.components.length > 1) {
 		var res = "Cadence.search([";
 		for (var i=0; i<this.components.length; i++) {
-			if (typeof this.components[i] == "object") {
+			var type = typeof this.components[i];
+			if (type == "object") {
 				if (this.components[i] instanceof Cadence.AST.Path) {
 					res += this.components[i].generate(ctx);
 				} else if (this.components[i].type == "variable") {
 					res += this.components[i].label;
 				}
 			} else {
-				res += "\""+this.components[i]+"\"";
+				if (type == "number") {
+					res += this.components[i];
+				} else {
+					res += "\""+this.components[i]+"\"";
+				}
 			}
 			if (i < this.components.length-1) {
 				res += ",";
