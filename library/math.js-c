@@ -1,0 +1,17 @@
+numbers A is ${{ typeof A == "number" }}$;
+
+A < B is ${{ A < B }}$ when (numbers A) && (numbers B);
+A <= B is ${{ A <= B }}$ when (numbers A) && (numbers B);
+A > B is ${{ A > B }}$ when (numbers A) && (numbers B);
+A >= B is ${{ A >= B }}$ when (numbers A) && (numbers B);
+
+A * B is ${{ A * B }}$ when (numbers A) && (numbers B);
+A + B is ${{ A + B }}$ when (numbers A) && (numbers B);
+A - B is ${{ A - B }}$ when (numbers A) && (numbers B);
+A / B is ${{ A / B }}$ when (numbers A) && (numbers B) && (B != 0);
+A ^ B is ${{ Math.pow(A,B) }}$ when (numbers A) && (numbers B);
+A % B is ${{ A % B }}$ when (numbers A) && (numbers B);
+
+math square root A is ${{ Math.sqrt(A) }}$ when (numbers A);
+math round A is ${{ Math.round(A) }}$ when (numbers A);
+math floor A is ${{ Math.floor(A) }}$ when (numbers A);

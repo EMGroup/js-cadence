@@ -1,0 +1,9 @@
+booleans true is true;
+booleans false is true;
+
+A != B is ${{ A != B }}$;
+A == B is ${{ A == B }}$;
+
+A && B is ${{ A && B }}$;
+A || B is ${{ A || B }}$;
+!A is ${{ !A }}$;
