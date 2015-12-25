@@ -88,11 +88,12 @@ Cadence.AST.Definition.prototype.generate = function() {
 	var lhs = "[";
 	var params = "";
 	for (var i=0; i<this.lhs.length; i++) {
-		if (typeof this.lhs[i] == "object") {
+		var type = typeof this.lhs[i];
+		if (type == "object") {
 			lhs += "undefined";
 			params += this.lhs[i].label + ",";
 		} else {
-			if (typeof this.lhs[i] == "number") {
+			if (type == "number" || type == "boolean") {
 				lhs += this.lhs[i];
 			} else {
 				lhs += "\""+this.lhs[i]+"\"";
@@ -133,19 +134,22 @@ Cadence.AST.Path.prototype.addComponent = function(comp) {
 }
 
 Cadence.AST.Path.prototype.generate = function(ctx) {
-
 	if (this.components.length > 1) {
-		var res = "Cadence.search([";
+		var res;
+		if (this.type == "path") res = "Cadence.search([";
+		else res = "[";
 		for (var i=0; i<this.components.length; i++) {
 			var type = typeof this.components[i];
 			if (type == "object") {
-				if (this.components[i] instanceof Cadence.AST.Path) {
+				if (this.components[i].type == "path") {
+					res += this.components[i].generate(ctx);
+				} else if (this.components[i].type == "list") {
 					res += this.components[i].generate(ctx);
 				} else if (this.components[i].type == "variable") {
 					res += this.components[i].label;
 				}
 			} else {
-				if (type == "number") {
+				if (type == "number" || type == "boolean") {
 					res += this.components[i];
 				} else {
 					res += "\""+this.components[i]+"\"";
@@ -155,11 +159,16 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 				res += ",";
 			}
 		}
-		res += "])";
+		if (this.type == "path") res += "])";
+		else res += "]";
 		return res;
 	} else {
 		if (typeof this.components[0] == "object") {
-			if (this.components[0].type == "javascript") {
+			if (this.components[0].type == "path") {
+				return this.components[0].generate(ctx);
+			} else if (this.components[0].type == "list") {
+				return this.components[0].generate(ctx);
+			} else if (this.components[0].type == "javascript") {
 				return this.components[0].script;
 			} else {
 				return this.components[0].label;

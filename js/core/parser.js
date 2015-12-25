@@ -421,6 +421,16 @@ Cadence.Parser.prototype.pPATH = function() {
 		case "*="			:	path.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.ASSIGNINPATH));
 								return path;
 		case "when"			:	return path;
+		case "["			:	this.next();
+								var list = this.pPATH();
+								list.type = "list";
+								path.addComponent(list);
+								if (this.token != "]") {
+									path.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.CLOSEPATH));
+									return path;
+								}
+								this.next();
+								break;
 		case "("			:	this.next();
 								path.addComponent(this.pPATH());
 								if (this.token != ")") {
@@ -429,6 +439,7 @@ Cadence.Parser.prototype.pPATH = function() {
 								}
 								this.next();
 								break;
+		case "]"			:
 		case ")"			:	return path;
 		case ";"			:	return path;
 		default				:	path.addComponent(this.token);
