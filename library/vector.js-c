@@ -1,0 +1,56 @@
+A ∈ vectors2d is ((A x) ∈ numbers ) ∧ ((A y) ∈ numbers) ∧ ((A z) ∉ numbers);
+A ∈ vectors3d is ((A x) ∈ numbers ) ∧ ((A y) ∈ numbers) ∧ ((A z) ∈ numbers);
+
+vector X Y is [_vector X Y]		when (X ∈ numbers) ∧ (Y ∈ numbers);
+vector X Y Z is [_vector X Y Z]	when (X ∈ numbers) ∧ (Y ∈ numbers) ∧ (Z ∈ numbers);
+_vector X Y x is X;
+_vector X Y y is Y;
+_vector X Y Z x is X;
+_vector X Y Z y is Y;
+_vector X Y Z z is Z;
+
+/* Vector Addition */
+A + B is [A + B]			when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
+A + B x is (A x) + (B x)	when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
+A + B y is (A y) + (B y)	when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
+A + B z is (A z) + (B z)	when (A ∈ vectors3d) ∧ (B ∈ vectors3d);
+
+/* Vector Scaler Addition */
+V + X is [V + X]			when ((V ∈ vectors2d) ∨ (V ∈ vectors3d)) ∧ (X ∈ numbers);
+V + X x is (V x) + X		when ((V ∈ vectors2d) ∨ (V ∈ vectors3d)) ∧ (X ∈ numbers);
+V + X y is (V y) + X		when ((V ∈ vectors2d) ∨ (V ∈ vectors3d)) ∧ (X ∈ numbers);
+V + X z is (V z) + X		when (V ∈ vectors3d) ∧ (X ∈ numbers);
+
+/* Vector Subtraction */
+A - B is [A - B]			when (A ∈ vectors2d) && (B ∈ vectors2d);
+A - B x is (A x) - (B x)	when (A ∈ vectors2d) && (B ∈ vectors2d);
+A - B y is (A y) - (B y)	when (A ∈ vectors2d) && (B ∈ vectors2d);
+A - B z is (A z) - (B z)	when (A ∈ vectors3d) && (B ∈ vectors3d);
+
+/* Vector Cross Product */
+A ⨯ B is ((A x) * (B y)) - ((A y) * (B x)) when (A ∈ vectors2d) && (B ∈ vectors2d);
+
+/* Vector Scaler Multiplication */
+V × X is [V × X]			when (V ∈ vectors2d) ∧ (X ∈ numbers);
+V × X x is (V x) × X		when (V ∈ vectors2d) ∧ (X ∈ numbers);
+V × X y is (V y) × X		when (V ∈ vectors2d) ∧ (X ∈ numbers);
+V × X z is (V z) × X		when (V ∈ vectors3d) ∧ (X ∈ numbers);
+
+|A| is √ (((A x) ^ 2) + ((A y) ^ 2))				when A ∈ vectors2d;
+|A|^2 is ((A x) ^ 2) + ((A y) ^ 2)					when A ∈ vectors2d;
+|A| is √ (((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2))	when A ∈ vectors3d;
+|A|^2 is ((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2)	when A ∈ vectors3d;
+
+A ∙ B is [A ∙ B]			when (points A) && (points B);
+
+||A|| is [||A||]
+||A|| x is (A x) / (|A|)	when |A| > 0;
+||A|| y is (A y) / (|A|)	when |A| > 0;
+||A|| z is (A z) / (|A|)	when |A| > 0;
+||A|| x is 0				when |A| = 0;
+||A|| y is 0				when |A| = 0;
+||A|| z is 0				when |A| = 0;
+
+distance A B is |(A - B)|
+
+

@@ -270,7 +270,7 @@ Cadence.Parser.prototype.next = function() {
 			}
 			this.token = this.stream.readToken();
 		// Skip line comments
-		} else if (this.token == "##") {
+		} else if (this.token == "//") {
 			this.stream.skipLine();
 			this.token = this.stream.readToken();
 		// Extract javascript code blocks
@@ -366,6 +366,8 @@ Cadence.Parser.prototype.pDEFINITION = function() {
 			definition.addLHSVariable(this.data.value);
 		} else if (this.token == "STRING") {
 			definition.addLHSLiteral(this.data.value);
+		} else if (this.token == "BOOLEAN") {
+			definition.addLHSLiteral(this.data.value);
 		} else if (this.token == "NUMBER") {
 			definition.addLHSLiteral(this.data.value);
 		} else if (this.token == "JAVASCRIPT") {
@@ -409,6 +411,7 @@ Cadence.Parser.prototype.pPATH = function() {
 								this.next();
 								break;
 		case "NUMBER"		:
+		case "BOOLEAN"		:
 		case "STRING"		:	path.addComponent(this.data.value);
 								this.next();
 								break;

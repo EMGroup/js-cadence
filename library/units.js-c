@@ -1,30 +1,30 @@
-A s is A when numbers A;
-A seconds is A when numbers A;
-A ms is A / 1000 when numbers A;
-A mins is A * 60 when numbers A;
-A minutes is A mins when numbers A;
-A days is A * 24*60*60 when numbers A;
-A hours is A * 60 * 60 when numbers A;
+A s is A 				when A ∈ numbers;
+A seconds is A			when A ∈ numbers;
+A ms is A / 1000		when A ∈ numbers;
+A mins is A * 60		when A ∈ numbers;
+A minutes is A mins		when A ∈ numbers;
+A days is A * 24*60*60	when A ∈ numbers;
+A hours is A * 60 * 60	when A ∈ numbers;
 A mins B seconds is (A mins) + (B seconds);
 A mins B s is (A mins) + (B s);
 
 
-A m is A when numbers A;
-A cm is A / 100 when numbers A;
-A mm is A / 1000 when numbers A;
-A km is A * 1000 when numbers A;
-A' is A * 0.3048 when numbers A;
-A'' is A * 0.0254 when numbers A;
-A' B'' is (A * 0.3048)+(B * 0.0254) when (numbers A) && (numbers B);
+A m is A				when A ∈ numbers;
+A cm is A / 100			when A ∈ numbers;
+A mm is A / 1000		when A ∈ numbers;
+A km is A * 1000		when A ∈ numbers;
+A' is A * 0.3048		when A ∈ numbers;
+A'' is A * 0.0254		when A ∈ numbers;
+A' B'' is (A * 0.3048)+(B * 0.0254) when (A ∈ numbers) ∧ (B ∈ numbers);
 
-A g is A / 1000 when numbers A;
-A kg is A when numbers A;
-A lb is A * 0.453592 when numbers A;
+A g is A / 1000			when A ∈ numbers;
+A kg is A				when A ∈ numbers;
+A lb is A * 0.453592	when A ∈ numbers;
 
-A° is A * 0.0174533 when numbers A;
-A㎭ is A when numbers A;
-A rad is A when numbers A;
+A ° is A * 0.0174533	when A ∈ numbers;
+A ㎭ is A				when A ∈ numbers;
+A rad is A				when A ∈ numbers;
 
-A°c is A * 273.15 when numbers A;
-A°f is ((A - 32) / 1.8) + 273.15 when numbers A;
-A k is A when numbers A;
+A °c is A * 273.15		when A ∈ numbers;
+A °f is ((A - 32) / 1.8) + 273.15 when A ∈ numbers;
+A k is A				when A ∈ numbers;

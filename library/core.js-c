@@ -1,0 +1,10 @@
+A in B is A ∈ B;
+A not in B is A ∉ B;
+
+A != B is ${{ A != B }}$;
+A ≠ B is ${{ A != B }}$;
+A = B is ${{ A == B }}$;
+
+A equals B is A = B;
+A not equals B is A ≠ B;
+

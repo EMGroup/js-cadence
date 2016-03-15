@@ -1,0 +1,5 @@
+A ∈ lists is ${{ A instanceof Array }}$;
+list A is [_list A];
+_list A I is ${{ A[I] }}$			when (A ∈ lists) ∧ (I ∈ numbers);
+_list A length is ${{ A.length }}$	when A ∈ lists;
+

@@ -10,50 +10,42 @@ Cadence.tree = {};
 
 
 Cadence.search = function(path) { //, base, index) {
-	var current = this.tree;
+	//var current = this.tree;
 	var node;
-	var i;
+	var i = 0;
 	var variables = [];
-	/*if (base) {
-		base = base.concat(path);
-	}*/
 
-	// Apply base first
-	/*if (base !== undefined) {
-		var newcur = current[base];
-		if (newcur === undefined) {
-			newcur = current["undefined"];
+	function depth(current) {
+		// Follow rest of the path from the base
+		for (; i<path.length; i++) {
+			var newcur = current[path[i]];
 			if (newcur === undefined) {
-				return undefined;
+				newcur = current["undefined"];
+				if (newcur === undefined) {
+					break;
+				}
+
+				variables.push(path[i]);
 			}
-
-			variables.push(base);
+			current = newcur.children;
+			node = newcur;
 		}
-		current = newcur.children;
-		node = newcur;
-	}*/
-
-	// Follow rest of the path from the base
-	for (i=0; i<path.length; i++) {
-		var newcur = current[path[i]];
-		if (newcur === undefined) {
-			newcur = current["undefined"];
-			if (newcur === undefined) {
-				break;
-			}
-
-			variables.push(path[i]);
-		}
-		current = newcur.children;
-		node = newcur;
 	}
+
+	depth(this.tree);
+
+	//console.log("Variables: " + JSON.stringify(variables));
 
 	// Check all the parts and roll back if not matched
 	while(node) {
+		//console.log(node);
+		//console.log(i);
 		var result;
 		for (var j=0; j<node.parts.length; j++) {
 			if (node.parts[j].condition === undefined || node.parts[j].condition.apply(undefined, variables)) {
 				result = node.parts[j].definition.apply(undefined, variables);
+				//console.log("MATCH FOUND: ");
+				//console.log(node.parts[j]);
 
 				// Is there more path to go?
 				if (i < path.length && i > 0) {
@@ -66,13 +58,27 @@ Cadence.search = function(path) { //, base, index) {
 			}
 		}
 
-		if (node.name === undefined) variables.pop();
-		i--;
-		node = node.parent;
+		if (node.name === undefined) {
+			variables.pop();
+			i--;
+			node = node.parent;
+		} else {
+			if (i == 1) {
+				variables.unshift(node.name);
+				depth(this.tree["undefined"].children);
+			} else {
+				if (node.parent && node.parent.children["undefined"]) {
+					variables.unshift(node.name);
+					depth(node.parent.children["undefined"].children);
+				} else {
+					node = node.parent;
+					i--;
+				}
+			}
+		}
 	}
 
 	// No match in unflattened form. So flatten first nested element
-	//path = path.concat.apply([], path);
 	for (var i=0; i<path.length; i++) {
 		if (path[i] instanceof Array) {
 			path = path.slice(0,i).concat(path[i]).concat(path.slice(i+1));
@@ -99,6 +105,12 @@ Cadence.define = function(path, def, cond) {
 	}
 
 	current.parts.unshift({definition: def, condition: cond, timestamp: Date.now()});
+}
+
+Cadence.eval = function(str) {
+	var ast = new Cadence.Parser(str);
+	ast.parse();
+	return eval(ast.generate());
 }
 
 

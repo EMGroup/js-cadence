@@ -53,3 +53,11 @@ test("Multi-Conditional Define", function() {
 	equal(Cadence.search(["f",102]), 204);
 });
 
+test("Nested patterns", function() {
+	Cadence.define(["point", undefined, undefined], function(X,Y) { return ["point", X, Y]; });
+	Cadence.define(["point", undefined, undefined, "x"], function(X,Y) { return X; });
+	Cadence.define(["my", "point"], function() { return Cadence.search(["point",5,10]); });
+	equal(Cadence.search(["my","point","x"]), 5);
+	//equal(Cadence.search(["my","point","y"]), 10);
+});
+

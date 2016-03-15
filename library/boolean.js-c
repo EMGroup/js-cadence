@@ -1,9 +1,15 @@
 booleans true is true;
 booleans false is true;
 
-A != B is ${{ A != B }}$;
-A == B is ${{ A == B }}$;
-
 A && B is ${{ A && B }}$;
 A || B is ${{ A || B }}$;
 !A is ${{ !A }}$;
+
+A ∧ B is ${{ A && B }}$;
+A ∨ B is ${{ A || B }}$;
+¬ A is ${{ !A }}$;
+
+A and B is A ∧ B	when (A ∈ booleans) ∧ (B ∈ booleans);
+A or B is A ∨ B		when (A ∈ booleans) ∧ (B ∈ booleans);
+not A is ¬ A		when A ∈ booleans;
+
