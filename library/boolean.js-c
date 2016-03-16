@@ -1,15 +1,33 @@
 booleans true is true;
 booleans false is true;
 
-A && B is ${{ A && B }}$;
-A || B is ${{ A || B }}$;
-!A is ${{ !A }}$;
+! true is false;
+! false is true;
+! 0 is true;
+! A is false when (A ∈ numbers);
 
-A ∧ B is ${{ A && B }}$;
-A ∨ B is ${{ A || B }}$;
-¬ A is ${{ !A }}$;
+¬ A is ! A;
 
-A and B is A ∧ B	when (A ∈ booleans) ∧ (B ∈ booleans);
-A or B is A ∨ B		when (A ∈ booleans) ∧ (B ∈ booleans);
-not A is ¬ A		when A ∈ booleans;
+A and B is A ∧ B;
+A or B is A ∨ B;
+not A is ¬ A;
 
+
+true && false is false;
+true && true is true;
+false && false is false;
+false && true is false;
+0 && A is false;
+A && 0 is false;
+A && B is true when (A ∈ numbers) ∧ (B ∈ numbers);
+
+A ∧ B is A && B;
+
+true || false is true;
+true || true is true;
+false || false is false;
+false || true is true;
+0 || 0 is false;
+A || B is true when (A ∈ numbers) ∧ (B ∈ numbers);
+
+A ∨ B is A || B;

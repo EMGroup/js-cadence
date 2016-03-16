@@ -10,10 +10,12 @@ _vector X Y Z y is Y;
 _vector X Y Z z is Z;
 
 /* Vector Addition */
-A + B is [A + B]			when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
+/*A + B is [A + B]			when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
 A + B x is (A x) + (B x)	when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
 A + B y is (A y) + (B y)	when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
-A + B z is (A z) + (B z)	when (A ∈ vectors3d) ∧ (B ∈ vectors3d);
+A + B z is (A z) + (B z)	when (A ∈ vectors3d) ∧ (B ∈ vectors3d);*/
+
+A + B is vector ((A x) + (B x)) ((A y) + (B y))		when (A ∈ vectors2d) ∧ (B ∈ vectors2d);
 
 /* Vector Scaler Addition */
 V + X is [V + X]			when ((V ∈ vectors2d) ∨ (V ∈ vectors3d)) ∧ (X ∈ numbers);

@@ -65,6 +65,8 @@ Cadence.search = function(path) { //, base, index) {
 		} else {
 			if (i == 1) {
 				variables.unshift(node.name);
+				node = undefined;
+				//console.log(path);
 				depth(this.tree["undefined"].children);
 			} else {
 				if (node.parent && node.parent.children["undefined"]) {
@@ -81,7 +83,15 @@ Cadence.search = function(path) { //, base, index) {
 	// No match in unflattened form. So flatten first nested element
 	for (var i=0; i<path.length; i++) {
 		if (path[i] instanceof Array) {
-			path = path.slice(0,i).concat(path[i]).concat(path.slice(i+1));
+			var s = Cadence.search(path[i]);
+			if (s === undefined) {
+				//console.log("Flatten: " + JSON.stringify(path));
+				path = path.slice(0,i).concat(path[i]).concat(path.slice(i+1));
+				//console.log("Flattened: " + JSON.stringify(path));
+			} else {
+				path[i] = s;
+			}
+			//console.log("Flattened: " + JSON.stringify(s));
 			return Cadence.search(path);
 		}
 	}
