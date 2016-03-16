@@ -28,9 +28,17 @@ Cadence.AST.Script.prototype.addDefinition = function(def) {
 	}
 }
 
+Cadence.AST.Script.prototype.addQuery = function(q) {
+	this.definitions.push(q);
+	if (q && q.hasErrors()) {
+		this.errors.push.apply(this.errors, q.errors);
+	}
+}
+
 Cadence.AST.Script.prototype.generate = function() {
 	var res = "{\n";
 	for (var i=0; i<this.definitions.length; i++) {
+		if (this.definitions[i].type == "path") res += "result = ";
 		res += this.definitions[i].generate() + ";\n";
 	}
 	res += "}\n";
@@ -54,6 +62,16 @@ Cadence.AST.Definition = function() {
 
 Cadence.AST.Definition.prototype.error = Cadence.AST.error;
 Cadence.AST.Definition.prototype.hasErrors = Cadence.AST.hasErrors;
+
+Cadence.AST.Definition.prototype.addLHSPath = function(path) {
+	for (var i=0; i<path.components.length; i++) {
+		if (typeof path.components[i] == "object" && path.components[i].type == "variable") {
+			this.addLHSVariable(path.components[i].label);
+		} else {
+			this.addLHSLiteral(path.components[i]);
+		}
+	}
+}
 
 Cadence.AST.Definition.prototype.addLHSVariable = function(ent) {
 	var id;
@@ -109,7 +127,7 @@ Cadence.AST.Definition.prototype.generate = function() {
 
 	var res = "\tCadence.define(\n\t\t" + lhs
 				+ ",\n\t\tfunction("+params+") { return " + this.path.generate(this)
-				+ "; },\n\t\t"+((this.condition) ? "function("+params+") { return "+ this.condition.generate(this) + "; }" : "undefined") + "\n\t)";
+				+ "; },\n\t\t"+((this.condition) ? "function("+params+") { return "+ this.condition.generate(this) + "; }" : "undefined") + ","+ (this.path.hasJavascript) + "\n\t)";
 	return res;
 }
 
@@ -121,6 +139,7 @@ Cadence.AST.Path = function() {
 	this.type = "path";
 	this.errors = [];
 	this.components = [];
+	this.hasJavascript = false;
 }
 
 Cadence.AST.Path.prototype.error = Cadence.AST.error;
@@ -159,7 +178,7 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 				res += ",";
 			}
 		}
-		if (this.type == "path") res += "])";
+		if (this.type == "path") res += "], this)";
 		else res += "]";
 		return res;
 	} else {
@@ -169,6 +188,7 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 			} else if (this.components[0].type == "list") {
 				return this.components[0].generate(ctx);
 			} else if (this.components[0].type == "javascript") {
+				this.hasJavascript = true;
 				return this.components[0].script;
 			} else {
 				return this.components[0].label;

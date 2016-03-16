@@ -1,0 +1,25 @@
+svg rectangle is ${{ document.createElementNS("http://www.w3.org/2000/svg", 'rect') }}$;
+A attribute B C is ${{ (function() { A.setAttribute(B, C); return A;})() }}$;
+
+A append child B is ${{ (function() { A.appendChild(B); return A;})() }}$;
+
+html body is ${{ document.body }}$;
+html svg is ${{ document.createElementNS("http://www.w3.org/2000/svg", 'svg') }}$;
+
+test width is 50;
+
+my rect is svg rectangle;
+test rect is my rect
+	attribute width (test width)
+	attribute height 100
+	attribute style "fill: red;"
+	attribute x 50
+	attribute y 50;
+
+my svg is html svg;
+test svg is my svg
+	attribute width 300
+	attribute height 300
+	append child (test rect);
+
+html body append child (test svg);

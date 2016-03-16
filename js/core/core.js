@@ -4,12 +4,48 @@ Cadence.Entry = function(parent, name) {
 	this.name = name;
 	this.children = {};
 	this.parts = [];
+	this.dependants = [];
+	this.pattern = false;
+}
+
+Cadence.Part = function(def, cond, time) {
+	this.definition = def;
+	this.condition = cond;
+	this.timestamp = time;
+	//this.dependants = [];
+	this.cache = undefined;
+	//this.out_of_date = true;
+}
+
+Cadence.Part.prototype.evaluate = function(owner, variables) {
+	var result = this.definition.apply(owner, variables);
+	this.cache = result;
+	return result;
+}
+
+Cadence.Entry.prototype.addDependency = function(node) {
+	this.dependants.push(node);
+	// TODO MAKE UNIQUE
+	if (this.parent) this.parent.addDependency(node);
+}
+
+Cadence.Entry.prototype.expire = function() {
+	if (!this.pattern) {
+		for (var i=0; i<this.parts.length; i++) {
+			this.parts[i].evaluate(this, []);
+		}
+	}
+	var olddeps = this.dependants;
+	this.dependants = [];
+	for (var i=0; i<olddeps.length; i++) {
+		olddeps[i].expire();
+	}
 }
 
 Cadence.tree = {};
 
 
-Cadence.search = function(path) { //, base, index) {
+Cadence.search = function(path, origin) { //, base, index) {
 	//var current = this.tree;
 	var node;
 	var i = 0;
@@ -42,16 +78,24 @@ Cadence.search = function(path) { //, base, index) {
 		//console.log(i);
 		var result;
 		for (var j=0; j<node.parts.length; j++) {
-			if (node.parts[j].condition === undefined || node.parts[j].condition.apply(undefined, variables)) {
-				result = node.parts[j].definition.apply(undefined, variables);
+			if (node.parts[j].condition === undefined || node.parts[j].condition.apply(node, variables)) {
+				if (variables.length > 0 || node.pattern) {
+					result = node.parts[j].evaluate(node, variables);
+				} else {
+					result = node.parts[j].cache;
+				}
+
 				//console.log("MATCH FOUND: ");
 				//console.log(node.parts[j]);
+
+				// TODO ADD DEPENDENCY HERE TO ALL PARENTS
+				if (origin && origin instanceof Cadence.Entry) node.addDependency(origin);
 
 				// Is there more path to go?
 				if (i < path.length && i > 0) {
 					var npath = Array.prototype.concat.apply([result],path.slice(i));
 					//console.log(npath);
-					return Cadence.search(npath);
+					return Cadence.search(npath, origin);
 				} else {
 					return result;
 				}
@@ -83,7 +127,7 @@ Cadence.search = function(path) { //, base, index) {
 	// No match in unflattened form. So flatten first nested element
 	for (var i=0; i<path.length; i++) {
 		if (path[i] instanceof Array) {
-			var s = Cadence.search(path[i]);
+			var s = Cadence.search(path[i], origin);
 			if (s === undefined) {
 				//console.log("Flatten: " + JSON.stringify(path));
 				path = path.slice(0,i).concat(path[i]).concat(path.slice(i+1));
@@ -92,18 +136,21 @@ Cadence.search = function(path) { //, base, index) {
 				path[i] = s;
 			}
 			//console.log("Flattened: " + JSON.stringify(s));
-			return Cadence.search(path);
+			return Cadence.search(path, origin);
 		}
 	}
 }
 				
-Cadence.define = function(path, def, cond) {
+Cadence.define = function(path, def, cond, force) {
 	var current = this.tree;
 	var parent = undefined;
+	var pattern = false;
 
 	for (var i=0; i<path.length; i++) {
+		if (path[i] === undefined) pattern = true;
 		if (current[path[i]] === undefined) {
 			current[path[i]] = new Cadence.Entry(parent, path[i]);
+			current[path[i]].pattern = pattern;
 		}
 
 		if (i < path.length-1) {
@@ -114,13 +161,17 @@ Cadence.define = function(path, def, cond) {
 		}
 	}
 
-	current.parts.unshift({definition: def, condition: cond, timestamp: Date.now()});
+	current.pattern = pattern || force;
+	current.parts.unshift(new Cadence.Part(def, cond, Date.now()));
+	current.expire();
 }
 
 Cadence.eval = function(str) {
+	var result;
 	var ast = new Cadence.Parser(str);
 	ast.parse();
-	return eval(ast.generate());
+	eval(ast.generate());
+	return result;
 }
 
 

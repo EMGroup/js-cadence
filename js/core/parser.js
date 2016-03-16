@@ -330,20 +330,34 @@ Cadence.Parser.prototype.pSCRIPT = function() {
 	var script = new Cadence.AST.Script();
 
 	while (this.stream.valid()) {
-		var definition = this.pDEFINITION();
-		script.addDefinition(definition);
-		if (definition.hasErrors()) {
+		var path = this.pPATH();
+
+		if (path.hasErrors()) {
 			this.skipUntil(";");
-		} else {
-			if (this.stream.valid()) {
-				if (this.token == "}") {
-					return script;
-				} else if (this.token != ";") {
-					script.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.MISSINGSEMICOLON));
-					this.skipUntil(";");
+			continue;
+		}
+
+		if (this.token == "is") {
+			var definition = this.pDEFINITION();
+			definition.addLHSPath(path);
+			script.addDefinition(definition);
+			if (definition.hasErrors()) {
+				this.skipUntil(";");
+				continue;
+			} else {
+				if (this.stream.valid()) {
+					if (this.token == "}") {
+						return script;
+					} else if (this.token != ";") {
+						script.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.MISSINGSEMICOLON));
+						this.skipUntil(";");
+					}
+					this.next();
 				}
-				this.next();
 			}
+		} else if (this.token == ";") {
+			script.addQuery(path);
+			this.next();
 		}
 	}
 
@@ -353,7 +367,7 @@ Cadence.Parser.prototype.pSCRIPT = function() {
 Cadence.Parser.prototype.pDEFINITION = function() {
 	var definition = new Cadence.AST.Definition();
 	
-	if (this.token == "is") {
+	/*if (this.token == "is") {
 		definition.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.MISSINGENTITY));
 		return definition;
 	}
@@ -382,7 +396,7 @@ Cadence.Parser.prototype.pDEFINITION = function() {
 	if (this.token != "is") {
 		definition.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.MISSINGIS));
 		return definition;
-	}
+	}*/
 
 	this.next();
 
@@ -415,7 +429,7 @@ Cadence.Parser.prototype.pPATH = function() {
 		case "STRING"		:	path.addComponent(this.data.value);
 								this.next();
 								break;
-		case "is"			:	path.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.ISINPATH));
+		case "is"			:	//path.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.ISINPATH));
 							 	return path;
 		//case "="			:
 		case "+="			:
