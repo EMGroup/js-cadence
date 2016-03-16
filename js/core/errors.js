@@ -129,7 +129,7 @@ Cadence.SyntaxError.prototype.prettyPrint = function() {
 
 	errmsg += "\n    Here   : " + this.extractBefore(10) + ">>> " + this.extractToken() + " <<<" + this.extractAfter(10);
 
-	if (err.suggestion) {
+	if (err && err.suggestion) {
 		errmsg += "\n    Suggestion : " + this.buildSuggestion();
 	}
 

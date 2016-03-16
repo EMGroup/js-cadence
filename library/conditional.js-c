@@ -1,9 +1,7 @@
 A if true else C is A;
 A if false else C is C;
-//A if B else C is C when B == false;
-//A if B else C is A when B == true;
+
 
 true ? B : C is B;
 false ? B : C is C;
-//A ? B : C is B when A == true;
-//A ? B : C is C when A == false;
+

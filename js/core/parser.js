@@ -417,7 +417,7 @@ Cadence.Parser.prototype.pPATH = function() {
 								break;
 		case "is"			:	path.error(new Cadence.SyntaxError(this, Cadence.SyntaxError.ISINPATH));
 							 	return path;
-		case "="			:
+		//case "="			:
 		case "+="			:
 		case "-="			:
 		case "/="			:
