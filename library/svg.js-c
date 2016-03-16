@@ -1,4 +1,5 @@
 svg rectangle is ${{ document.createElementNS("http://www.w3.org/2000/svg", 'rect') }}$;
+svg path is ${{ document.createElementNS("http://www.w3.org/2000/svg", 'path') }}$;
 A attribute B C is ${{ (function() { A.setAttribute(B, C); return A;})() }}$;
 
 A append child B is ${{ (function() { A.appendChild(B); return A;})() }}$;
@@ -16,10 +17,25 @@ test rect is my rect
 	attribute x 50
 	attribute y 50;
 
+//line A from X Y to X2 Y2 is A
+//	attribute d ("M " + X + " " + Y + " L " + X2 + " " + Y2);
+
+line A is _line (_line (A element) A shape) A colour;
+_line A B shape is A attribute d ("M " + (B x) + " " + (B y) + " L " + (B x2) + " " + (B y2));
+_line A B colour is A attribute style ("stroke: " + (B colour) + "; stroke-width: 2px;");
+
+my x is 10;
+my y is 10;
+my x2 is 100;
+my y2 is 100;
+my colour is "pink";
+my element is svg path;
+my line is line my;
+
 my svg is html svg;
 test svg is my svg
 	attribute width 300
 	attribute height 300
-	append child (test rect);
+	append child (my line);
 
 html body append child (test svg);

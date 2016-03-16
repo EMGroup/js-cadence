@@ -182,7 +182,8 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 		else res += "]";
 		return res;
 	} else {
-		if (typeof this.components[0] == "object") {
+		var type = typeof this.components[0];
+		if (type == "object") {
 			if (this.components[0].type == "path") {
 				return this.components[0].generate(ctx);
 			} else if (this.components[0].type == "list") {
@@ -193,6 +194,8 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 			} else {
 				return this.components[0].label;
 			}
+		} else if (type == "string") {
+			return "\"" + this.components[0] + "\"";
 		} else {
 			return this.components[0];
 		}

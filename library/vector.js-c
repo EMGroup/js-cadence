@@ -1,13 +1,13 @@
-A ∈ vectors2d is ((A x) ∈ numbers ) ∧ ((A y) ∈ numbers) ∧ ((A z) ∉ numbers);
-A ∈ vectors3d is ((A x) ∈ numbers ) ∧ ((A y) ∈ numbers) ∧ ((A z) ∈ numbers);
+A ∈ vectors2d is (list A 0 = _vector2);
+A ∈ vectors3d is (list A 0 = _vector3);
 
-vector X Y is [_vector X Y]		when (X ∈ numbers) ∧ (Y ∈ numbers);
-vector X Y Z is [_vector X Y Z]	when (X ∈ numbers) ∧ (Y ∈ numbers) ∧ (Z ∈ numbers);
-_vector X Y x is X;
-_vector X Y y is Y;
-_vector X Y Z x is X;
-_vector X Y Z y is Y;
-_vector X Y Z z is Z;
+vector X Y is [_vector2 X Y]		when (X ∈ numbers) ∧ (Y ∈ numbers);
+vector X Y Z is [_vector3 X Y Z]	when (X ∈ numbers) ∧ (Y ∈ numbers) ∧ (Z ∈ numbers);
+_vector2 X Y x is X;
+_vector2 X Y y is Y;
+_vector3 X Y Z x is X;
+_vector3 X Y Z y is Y;
+_vector3 X Y Z z is Z;
 
 /* Vector Addition */
 A + B is vector ((A x) + (B x)) ((A y) + (B y))					when (A ∈ vectors2d) ∧ (B ∈ vectors2d);
@@ -26,7 +26,7 @@ V - X is vector ((V x) - X) ((V y) - X)							when (V ∈ vectors2d) ∧ (X ∈ 
 V - X is vector ((V x) - X) ((V y) - X) ((V z) - X)				when (V ∈ vectors3d) ∧ (X ∈ numbers);
 
 /* Vector Cross Product */
-A ⨯ B is ((A x) * (B y)) - ((A y) * (B x))						when (A ∈ vectors2d) && (B ∈ vectors2d);
+A ⨯ B is ((A x) * (B y)) - ((A y) * (B x))						when (A ∈ vectors2d) ∧ (B ∈ vectors2d);
 A ⨯ B is vector
 	(((A y) * (B z)) - ((A z) * (B y)))
 	(((A z) * (B x)) - ((A x) * (B z)))
@@ -42,8 +42,8 @@ V × X is vector ((V x) * X) ((V y) * X) ((V z) * X)				when (V ∈ vectors3d) �
 |A| is √ (((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2))				when A ∈ vectors3d;
 |A|^2 is ((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2)				when A ∈ vectors3d;
 
-A ∙ B is ((A x) * (B x)) + ((A y) * (B y))						when (A ∈ vectors2d) && (B ∈ vectors2d);
-A ∙ B is ((A x) * (B x)) + ((A y) * (B y)) + ((A z) * (B z))	when (A ∈ vectors3d) && (B ∈ vectors3d);
+A ∙ B is ((A x) * (B x)) + ((A y) * (B y))						when (A ∈ vectors2d) ∧ (B ∈ vectors2d);
+A ∙ B is ((A x) * (B x)) + ((A y) * (B y)) + ((A z) * (B z))	when (A ∈ vectors3d) ∧ (B ∈ vectors3d);
 
 ||A|| is [||A||]
 ||A|| x is (A x) / (|A|)	when |A| > 0;

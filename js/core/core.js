@@ -24,21 +24,27 @@ Cadence.Part.prototype.evaluate = function(owner, variables) {
 }
 
 Cadence.Entry.prototype.addDependency = function(node) {
-	this.dependants.push(node);
+	if (this.dependants.indexOf(node) == -1) {
+		this.dependants.push(node);
+	}
 	// TODO MAKE UNIQUE
-	if (this.parent) this.parent.addDependency(node);
+	//if (this.parent) this.parent.addDependency(node);
 }
 
 Cadence.Entry.prototype.expire = function() {
+	var changed = false;
 	if (!this.pattern) {
 		for (var i=0; i<this.parts.length; i++) {
-			this.parts[i].evaluate(this, []);
+			var old = this.parts[i].cache;
+			if (this.parts[i].evaluate(this, []) !== old) changed = true;
 		}
 	}
-	var olddeps = this.dependants;
-	this.dependants = [];
-	for (var i=0; i<olddeps.length; i++) {
-		olddeps[i].expire();
+	if (changed || this.pattern) {
+		var olddeps = this.dependants;
+		this.dependants = [];
+		for (var i=0; i<olddeps.length; i++) {
+			olddeps[i].expire();
+		}
 	}
 }
 
@@ -78,18 +84,20 @@ Cadence.search = function(path, origin) { //, base, index) {
 		//console.log(i);
 		var result;
 		for (var j=0; j<node.parts.length; j++) {
-			if (node.parts[j].condition === undefined || node.parts[j].condition.apply(node, variables)) {
+			var cond = (node.parts[j].condition) ? node.parts[j].condition.apply(node, variables) : false;
+			if (node.parts[j].condition === undefined || (cond && cond != "false")) {
+				//console.log(path);
 				if (variables.length > 0 || node.pattern) {
-					result = node.parts[j].evaluate(node, variables);
+					result = node.parts[j].evaluate((node.pattern)?origin:node, variables);
 				} else {
 					result = node.parts[j].cache;
 				}
 
-				//console.log("MATCH FOUND: ");
+				if (origin === undefined || !(origin instanceof Cadence.Entry)) console.log(node);
 				//console.log(node.parts[j]);
 
 				// TODO ADD DEPENDENCY HERE TO ALL PARENTS
-				if (origin && origin instanceof Cadence.Entry) node.addDependency(origin);
+				if (origin && origin instanceof Cadence.Entry && !origin.pattern) node.addDependency(origin);
 
 				// Is there more path to go?
 				if (i < path.length && i > 0) {
@@ -110,7 +118,6 @@ Cadence.search = function(path, origin) { //, base, index) {
 			if (i == 1) {
 				variables.unshift(node.name);
 				node = undefined;
-				//console.log(path);
 				depth(this.tree["undefined"].children);
 			} else {
 				if (node.parent && node.parent.children["undefined"]) {

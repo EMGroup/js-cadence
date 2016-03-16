@@ -1,0 +1,6 @@
+strings A is ${{ typeof A == "string" }}$;
+
+A ∈ strings is ${{ typeof A == "string" }}$;
+A ∉ strings is ${{ typeof A != "string" }}$;
+
+A + B is ${{ A + B }}$	when (A ∈ strings);
