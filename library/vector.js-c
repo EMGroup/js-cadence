@@ -10,40 +10,40 @@ _vector X Y Z y is Y;
 _vector X Y Z z is Z;
 
 /* Vector Addition */
-/*A + B is [A + B]			when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
-A + B x is (A x) + (B x)	when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
-A + B y is (A y) + (B y)	when ((A ∈ vectors2d) ∨ (A ∈ vectors3d)) ∧ ((B ∈ vectors2d) ∨ (B ∈ vectors3d));
-A + B z is (A z) + (B z)	when (A ∈ vectors3d) ∧ (B ∈ vectors3d);*/
-
-A + B is vector ((A x) + (B x)) ((A y) + (B y))		when (A ∈ vectors2d) ∧ (B ∈ vectors2d);
+A + B is vector ((A x) + (B x)) ((A y) + (B y))					when (A ∈ vectors2d) ∧ (B ∈ vectors2d);
+A + B is vector ((A x) + (B x)) ((A y) + (B y)) ((A z) + (B z))	when (A ∈ vectors3d) ∧ (B ∈ vectors3d);
 
 /* Vector Scaler Addition */
-V + X is [V + X]			when ((V ∈ vectors2d) ∨ (V ∈ vectors3d)) ∧ (X ∈ numbers);
-V + X x is (V x) + X		when ((V ∈ vectors2d) ∨ (V ∈ vectors3d)) ∧ (X ∈ numbers);
-V + X y is (V y) + X		when ((V ∈ vectors2d) ∨ (V ∈ vectors3d)) ∧ (X ∈ numbers);
-V + X z is (V z) + X		when (V ∈ vectors3d) ∧ (X ∈ numbers);
+V + X is vector ((V x) + X) ((V y) + X)							when (V ∈ vectors2d) ∧ (X ∈ numbers);
+V + X is vector ((V x) + X) ((V y) + X) ((V z) + X)				when (V ∈ vectors3d) ∧ (X ∈ numbers);
 
 /* Vector Subtraction */
-A - B is [A - B]			when (A ∈ vectors2d) && (B ∈ vectors2d);
-A - B x is (A x) - (B x)	when (A ∈ vectors2d) && (B ∈ vectors2d);
-A - B y is (A y) - (B y)	when (A ∈ vectors2d) && (B ∈ vectors2d);
-A - B z is (A z) - (B z)	when (A ∈ vectors3d) && (B ∈ vectors3d);
+A - B is vector ((A x) - (B x)) ((A y) - (B y))					when (A ∈ vectors2d) ∧ (B ∈ vectors2d);
+A - B is vector ((A x) - (B x)) ((A y) - (B y)) ((A z) - (B z))	when (A ∈ vectors3d) ∧ (B ∈ vectors3d);
+
+/* Vector Scaler Subtraction */
+V - X is vector ((V x) - X) ((V y) - X)							when (V ∈ vectors2d) ∧ (X ∈ numbers);
+V - X is vector ((V x) - X) ((V y) - X) ((V z) - X)				when (V ∈ vectors3d) ∧ (X ∈ numbers);
 
 /* Vector Cross Product */
-A ⨯ B is ((A x) * (B y)) - ((A y) * (B x)) when (A ∈ vectors2d) && (B ∈ vectors2d);
+A ⨯ B is ((A x) * (B y)) - ((A y) * (B x))						when (A ∈ vectors2d) && (B ∈ vectors2d);
+A ⨯ B is vector
+	(((A y) * (B z)) - ((A z) * (B y)))
+	(((A z) * (B x)) - ((A x) * (B z)))
+	(((A x) * (B y)) - ((A y) * (B x)))
+	when (A ∈ vectors3d) && (B ∈ vectors3d);
 
 /* Vector Scaler Multiplication */
-V × X is [V × X]			when (V ∈ vectors2d) ∧ (X ∈ numbers);
-V × X x is (V x) × X		when (V ∈ vectors2d) ∧ (X ∈ numbers);
-V × X y is (V y) × X		when (V ∈ vectors2d) ∧ (X ∈ numbers);
-V × X z is (V z) × X		when (V ∈ vectors3d) ∧ (X ∈ numbers);
+V × X is vector ((V x) * X) ((V y) * X)							when (V ∈ vectors2d) ∧ (X ∈ numbers);
+V × X is vector ((V x) * X) ((V y) * X) ((V z) * X)				when (V ∈ vectors3d) ∧ (X ∈ numbers);
 
-|A| is √ (((A x) ^ 2) + ((A y) ^ 2))				when A ∈ vectors2d;
-|A|^2 is ((A x) ^ 2) + ((A y) ^ 2)					when A ∈ vectors2d;
-|A| is √ (((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2))	when A ∈ vectors3d;
-|A|^2 is ((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2)	when A ∈ vectors3d;
+|A| is √ (((A x) ^ 2) + ((A y) ^ 2))							when A ∈ vectors2d;
+|A|^2 is ((A x) ^ 2) + ((A y) ^ 2)								when A ∈ vectors2d;
+|A| is √ (((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2))				when A ∈ vectors3d;
+|A|^2 is ((A x) ^ 2) + ((A y) ^ 2) + ((A z) ^ 2)				when A ∈ vectors3d;
 
-A ∙ B is [A ∙ B]			when (points A) && (points B);
+A ∙ B is ((A x) * (B x)) + ((A y) * (B y))						when (A ∈ vectors2d) && (B ∈ vectors2d);
+A ∙ B is ((A x) * (B x)) + ((A y) * (B y)) + ((A z) * (B z))	when (A ∈ vectors3d) && (B ∈ vectors3d);
 
 ||A|| is [||A||]
 ||A|| x is (A x) / (|A|)	when |A| > 0;
