@@ -48,7 +48,53 @@ Cadence.Entry.prototype.expire = function() {
 	}
 }
 
+Cadence.CacheEntry = function() {
+	this.value = undefined;
+	this.dependants = [];
+	this.expired = true;
+}
+
+Cadence.CacheEntry.prototype.update = function(value) {
+	this.expired = false;
+	this.value = value;
+}
+
+Cadence.CacheEntry.prototype.expire = function() {
+	if (this.expired) return;
+	this.expired = true;
+	var olddeps = this.dependants;
+	this.dependants = [];
+	for (var i=0; i<olddeps.length; i++) {
+		olddeps[i].expire();
+	}
+}
+
+Cadence.CacheEntry.prototype.addDependency = function(node) {
+	if (this.dependants.indexOf(node) == -1) {
+		this.dependants.push(node);
+	}
+	// TODO MAKE UNIQUE
+	//if (this.parent) this.parent.addDependency(node);
+}
+
 Cadence.tree = {};
+Cadence.cache = {};
+
+Cadence.pathToString = function(path, end) {
+	var res = "";
+	for (var i=0; i<end; i++) {
+		var type = typeof path[i];
+		if (type == "object") {
+			if (Array.isArray(path[i])) {
+				res += "["+Cadence.pathToString(path[i], path[i].length) + "]";
+			} else {
+				return undefined;
+			}
+		}
+		res += "\""+path[i]+"\"";
+	}
+	return res;
+}
 
 
 Cadence.search = function(path, origin) { //, base, index) {
@@ -88,16 +134,36 @@ Cadence.search = function(path, origin) { //, base, index) {
 			if (node.parts[j].condition === undefined || (cond && cond != "false")) {
 				//console.log(path);
 				if (variables.length > 0 || node.pattern) {
-					result = node.parts[j].evaluate((node.pattern)?origin:node, variables);
+					var pathstr = Cadence.pathToString(path, i); //path.slice(0,i+1).join(" ");
+					if (pathstr) {
+						var cache = Cadence.cache[pathstr];
+						if (Cadence.cache[pathstr] === undefined) {
+							cache = new Cadence.CacheEntry();
+							Cadence.cache[pathstr] = cache;
+						}
+
+						if (!(cache.expired)) {
+							//console.log("USE CACHE: " + pathstr);
+							result = cache.value;
+						} else {
+							result = node.parts[j].evaluate((node.pattern)?cache:node, variables);
+							cache.update(result);
+							node.addDependency(cache);
+							cache.addDependency(origin);
+						}
+					} else {
+						result = node.parts[j].evaluate((node.pattern)?origin:node, variables);
+					}
+					//console.log("CACHE: " + path.slice(0,i+1).join(" ") + " = " + result);
 				} else {
 					result = node.parts[j].cache;
 				}
 
-				if (origin === undefined || !(origin instanceof Cadence.Entry)) console.log(node);
+				//if (origin === undefined || !(origin instanceof Cadence.Entry)) console.log(node);
 				//console.log(node.parts[j]);
 
 				// TODO ADD DEPENDENCY HERE TO ALL PARENTS
-				if (origin && origin instanceof Cadence.Entry && !origin.pattern) node.addDependency(origin);
+				if (origin && (origin instanceof Cadence.Entry || origin instanceof Cadence.CacheEntry)) node.addDependency(origin);
 
 				// Is there more path to go?
 				if (i < path.length && i > 0) {
@@ -171,6 +237,12 @@ Cadence.define = function(path, def, cond, force) {
 	current.pattern = pattern || force;
 	current.parts.unshift(new Cadence.Part(def, cond, Date.now()));
 	current.expire();
+
+	var pathstr = Cadence.pathToString(path,path.length);
+	var cache = Cadence.cache[pathstr];
+	if (cache) {
+		cache.expire();
+	}
 }
 
 Cadence.eval = function(str) {

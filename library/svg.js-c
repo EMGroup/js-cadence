@@ -1,5 +1,5 @@
 svg rectangle is ${{ document.createElementNS("http://www.w3.org/2000/svg", 'rect') }}$;
-svg path is ${{ document.createElementNS("http://www.w3.org/2000/svg", 'path') }}$;
+svg path A is ${{ document.createElementNS("http://www.w3.org/2000/svg", 'path') }}$;
 A attribute B C is ${{ (function() { A.setAttribute(B, C); return A;})() }}$;
 
 A append child B is ${{ (function() { A.appendChild(B); return A;})() }}$;
@@ -17,25 +17,44 @@ test rect is my rect
 	attribute x 50
 	attribute y 50;
 
-//line A from X Y to X2 Y2 is A
-//	attribute d ("M " + X + " " + Y + " L " + X2 + " " + Y2);
+/*line A from X Y to X2 Y2 is A
+	attribute d ("M " + X + " " + Y + " L " + X2 + " " + Y2);*/
 
-line A is _line (_line (A element) A shape) A colour;
-_line A B shape is A attribute d ("M " + (B x) + " " + (B y) + " L " + (B x2) + " " + (B y2));
-_line A B colour is A attribute style ("stroke: " + (B colour) + "; stroke-width: 2px;");
+/*line OBJ is OBJ element
+	attribute d ("M " + (OBJ a x) + " " + (OBJ a y) + " L " + (OBJ b x) + " " + (OBJ b y))
+	attribute style ("stroke: " + (OBJ colour) + "; stroke-width: " + (OBJ width) + "px;");*/
 
-my x is 10;
-my y is 10;
-my x2 is 100;
-my y2 is 100;
-my colour is "pink";
-my element is svg path;
+line A is _line (_line (svg path A) A shape) A colour;
+_line A B shape is A attribute d ("M " + (B line a x) + " " + (B line a y) + " L " + (B line b x) + " " + (B line b y));
+_line A B colour is A attribute style ("stroke: " + (B line colour) + "; stroke-width: 2px;");
+A line a is vector 10 10;
+A line b is vector 20 20;
+A line colour is black;
+A line width is 2;
+
+my line a is vector 10 10;
+my length is 10;
+my line b is my line a × (my length);
+my line colour is "pink";
+my line width is 4;
 my line is line my;
+
+/*my2 a is vector 10 10;
+my2 b is vector 10 100;
+my2 colour is "green";
+my2 width is 4;
+my2 line is line my2;*/
+
+my3 element is line my3;
+
+//my line is line (vector 10 10) (vector 100 100) "pink" 4;
 
 my svg is html svg;
 test svg is my svg
 	attribute width 300
 	attribute height 300
-	append child (my line);
+	append child (my line)
+	//append child (my2 element)
+	append child (my3 element);
 
 html body append child (test svg);
