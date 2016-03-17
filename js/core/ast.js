@@ -36,12 +36,12 @@ Cadence.AST.Script.prototype.addQuery = function(q) {
 }
 
 Cadence.AST.Script.prototype.generate = function() {
-	var res = "{\n";
+	var res = "(function() { var origin;\n";
 	for (var i=0; i<this.definitions.length; i++) {
 		if (this.definitions[i].type == "path") res += "result = ";
 		res += this.definitions[i].generate() + ";\n";
 	}
-	res += "}\n";
+	res += "});\n";
 	return res;
 }
 
@@ -109,7 +109,7 @@ Cadence.AST.Definition.prototype.generate = function() {
 		var type = typeof this.lhs[i];
 		if (type == "object") {
 			lhs += "undefined";
-			params += this.lhs[i].label + ",";
+			params += this.lhs[i].label+",";
 		} else {
 			if (type == "number" || type == "boolean") {
 				lhs += this.lhs[i];
@@ -126,8 +126,8 @@ Cadence.AST.Definition.prototype.generate = function() {
 	if (params != "") params = params.slice(0,-1);
 
 	var res = "\tCadence.define(\n\t\t" + lhs
-				+ ",\n\t\tfunction("+params+") { return " + this.path.generate(this)
-				+ "; },\n\t\t"+((this.condition) ? "function("+params+") { return "+ this.condition.generate(this) + "; }" : "undefined") + ","+ (this.path.hasJavascript) + "\n\t)";
+				+ ",\n\t\tfunction("+params+") { var origin = this; return " + this.path.generate(this)
+				+ "; },\n\t\t"+((this.condition) ? "function("+params+") { var origin = this; return "+ this.condition.generate(this) + "; }" : "undefined") + "\n\t)";
 	return res;
 }
 
@@ -178,7 +178,7 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 				res += ",";
 			}
 		}
-		if (this.type == "path") res += "], this)";
+		if (this.type == "path") res += "], origin)";
 		else res += "]";
 		return res;
 	} else {

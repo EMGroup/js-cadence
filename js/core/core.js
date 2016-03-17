@@ -133,7 +133,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 			var cond = (node.parts[j].condition) ? node.parts[j].condition.apply(node, variables) : false;
 			if (node.parts[j].condition === undefined || (cond && cond != "false")) {
 				//console.log(path);
-				if (variables.length > 0 || node.pattern) {
+				if (node.pattern) {
 					var pathstr = Cadence.pathToString(path, i); //path.slice(0,i+1).join(" ");
 					if (pathstr) {
 						var cache = Cadence.cache[pathstr];
@@ -149,7 +149,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 							result = node.parts[j].evaluate((node.pattern)?cache:node, variables);
 							cache.update(result);
 							node.addDependency(cache);
-							cache.addDependency(origin);
+							if (origin) cache.addDependency(origin);
 						}
 					} else {
 						result = node.parts[j].evaluate((node.pattern)?origin:node, variables);
@@ -160,7 +160,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 				}
 
 				//if (origin === undefined || !(origin instanceof Cadence.Entry)) console.log(node);
-				//console.log(node.parts[j]);
+				//console.log(origin);
 
 				// TODO ADD DEPENDENCY HERE TO ALL PARENTS
 				if (origin && (origin instanceof Cadence.Entry || origin instanceof Cadence.CacheEntry)) node.addDependency(origin);
@@ -214,7 +214,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 	}
 }
 				
-Cadence.define = function(path, def, cond, force) {
+Cadence.define = function(path, def, cond) {
 	var current = this.tree;
 	var parent = undefined;
 	var pattern = false;
@@ -234,7 +234,7 @@ Cadence.define = function(path, def, cond, force) {
 		}
 	}
 
-	current.pattern = pattern || force;
+	current.pattern = pattern;
 	current.parts.unshift(new Cadence.Part(def, cond, Date.now()));
 	current.expire();
 
@@ -249,7 +249,9 @@ Cadence.eval = function(str) {
 	var result;
 	var ast = new Cadence.Parser(str);
 	ast.parse();
-	eval(ast.generate());
+	var source = ast.generate();
+	//console.log(source);
+	eval(source).call(undefined);
 	return result;
 }
 

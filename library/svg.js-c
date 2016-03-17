@@ -26,7 +26,7 @@ test rect is my rect
 
 line A is _line (_line (svg path A) A shape) A colour;
 _line A B shape is A attribute d ("M " + (B line a x) + " " + (B line a y) + " L " + (B line b x) + " " + (B line b y));
-_line A B colour is A attribute style ("stroke: " + (B line colour) + "; stroke-width: 2px;");
+_line A B colour is A attribute style ("stroke: " + (B line colour) + "; stroke-width: " + (B line width) + "px;");
 A line a is vector 10 10;
 A line b is vector 20 20;
 A line colour is black;
@@ -37,15 +37,11 @@ my length is 10;
 my line b is my line a × (my length);
 my line colour is "pink";
 my line width is 4;
-my line is line my;
 
-/*my2 a is vector 10 10;
-my2 b is vector 10 100;
-my2 colour is "green";
-my2 width is 4;
-my2 line is line my2;*/
-
-my3 element is line my3;
+my2 line a is vector 10 10;
+my2 line b is vector 10 100;
+my2 line colour is "green";
+my2 line width is 4;
 
 //my line is line (vector 10 10) (vector 100 100) "pink" 4;
 
@@ -53,8 +49,8 @@ my svg is html svg;
 test svg is my svg
 	attribute width 300
 	attribute height 300
-	append child (my line)
-	//append child (my2 element)
-	append child (my3 element);
+	append child (line my)
+	append child (line my2)
+	append child (line my3);
 
 html body append child (test svg);
