@@ -4,3 +4,4 @@ A ∈ strings is ${{ typeof A == "string" }}$;
 A ∉ strings is ${{ typeof A != "string" }}$;
 
 A + B is ${{ A + B }}$	when (A ∈ strings);
+A concat B is ${{ "" + A + B }}$;

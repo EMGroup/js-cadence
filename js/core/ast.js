@@ -183,21 +183,28 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 		return res;
 	} else {
 		var type = typeof this.components[0];
+		var res;
 		if (type == "object") {
 			if (this.components[0].type == "path") {
-				return this.components[0].generate(ctx);
+				res = this.components[0].generate(ctx);
 			} else if (this.components[0].type == "list") {
-				return this.components[0].generate(ctx);
+				res = this.components[0].generate(ctx);
 			} else if (this.components[0].type == "javascript") {
 				this.hasJavascript = true;
-				return this.components[0].script;
+				res = this.components[0].script;
 			} else {
-				return this.components[0].label;
+				res = this.components[0].label;
 			}
 		} else if (type == "string") {
-			return "\"" + this.components[0] + "\"";
+			res = "\"" + this.components[0] + "\"";
 		} else {
-			return this.components[0];
+			res = this.components[0];
+		}
+
+		if (this.type == "list") {
+			return "[" + res + "]";
+		} else {
+			return res;
 		}
 	}
 }

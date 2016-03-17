@@ -3,3 +3,14 @@ list A is [_list A];
 _list A I is ${{ A[I] }}$			when (A ∈ lists) ∧ (I ∈ numbers);
 _list A length is ${{ A.length }}$	when A ∈ lists;
 
+list A join 0 is list A (list A length - 1)							when A ∈ lists;
+list A join is list A join (list A length - 1)		when A ∈ lists;
+list A join I is (list A (list A length - I - 1)) concat (list A join (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers);
+
+
+list A append B is ${{ A.concat(B) }}$		when A ∈ lists;
+//list A append B is ${{ [A,B] }}$				when A ∉ lists;
+
+apply X to all A is apply X to all A (list A length - 1)		when A ∈ lists;
+apply X to all A 0 is [(X (list A (list A length - 1)))]			when A ∈ lists;
+apply X to all A I is list [(X (list A (list A length - I - 1)))] append (apply X to all A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers);
