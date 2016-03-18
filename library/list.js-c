@@ -34,5 +34,11 @@ foldl1 X A I is X (foldl1 X A (I + 1)) (list A (list A length - I - 1))		when (A
 
 foldr1 X A is foldr1 X A 0							when (A ∈ lists) ∧ (list A length > 0);
 foldr1 X A I is list A I							when (A ∈ lists) ∧ (I = (list A length - 1));
-foldr1 X A I is X (foldr1 X A (I + 1)) (list A I)	when (A ∈ lists) ∧ (I < (list A length - 1));
+foldr1 X A I is X (list A I) (foldr1 X A (I + 1))	when (A ∈ lists) ∧ (I < (list A length - 1));
+
+filter X A is filter X A (list A length - 1)	when (A ∈ lists);
+filter X A 0 is [(list A (list A length - 1))]	when (A ∈ lists) ∧ (X (list A (list A length - 1)));
+filter X A 0 is []								when (A ∈ lists) ∧ (not (X (list A (list A length - 1))));
+filter X A I is list [(list A (list A length - I - 1))] append (filter X A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers) ∧ (X (list A (list A length - I - 1)));
+filter X A I is filter X A (I - 1)	when (A ∈ lists) ∧ (I ∈ numbers) ∧ (not (X (list A (list A length - I - 1))));
 
