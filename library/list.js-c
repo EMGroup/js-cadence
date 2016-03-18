@@ -14,3 +14,25 @@ list A append B is ${{ A.concat(B) }}$		when A ∈ lists;
 apply X to all A is apply X to all A (list A length - 1)		when A ∈ lists;
 apply X to all A 0 is [(X (list A (list A length - 1)))]			when A ∈ lists;
 apply X to all A I is list [(X (list A (list A length - I - 1)))] append (apply X to all A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers);
+
+/* Functional language */
+map X A is map X A (list A length - 1)				when A ∈ lists;
+map X A 0 is [(X (list A (list A length - 1)))]		when A ∈ lists;
+map X A I is list [(X (list A (list A length - I - 1)))] append (map X A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers);
+
+foldl X Y A is foldl X Y A 0							when (A ∈ lists) ∧ (list A length > 0);
+foldl X Y A I is X Y (list A 0)								when (A ∈ lists) ∧ (I = (list A length - 1));
+foldl X Y A I is X (foldl X Y A (I + 1)) (list A (list A length - I - 1))		when (A ∈ lists) ∧ (I < (list A length - 1));
+
+foldr X Y A is foldr X Y A 0							when (A ∈ lists) ∧ (list A length > 0);
+foldr X Y A I is X (list A I) Y							when (A ∈ lists) ∧ (I = (list A length - 1));
+foldr X Y A I is X (list A I) (foldr X Y A (I + 1))		when (A ∈ lists) ∧ (I < (list A length - 1));
+
+foldl1 X A is foldl1 X A 0							when (A ∈ lists) ∧ (list A length > 0);
+foldl1 X A I is list A 0								when (A ∈ lists) ∧ (I = (list A length - 1));
+foldl1 X A I is X (foldl1 X A (I + 1)) (list A (list A length - I - 1))		when (A ∈ lists) ∧ (I < (list A length - 1));
+
+foldr1 X A is foldr1 X A 0							when (A ∈ lists) ∧ (list A length > 0);
+foldr1 X A I is list A I							when (A ∈ lists) ∧ (I = (list A length - 1));
+foldr1 X A I is X (foldr1 X A (I + 1)) (list A I)	when (A ∈ lists) ∧ (I < (list A length - 1));
+

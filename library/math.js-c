@@ -3,6 +3,11 @@ numbers A is ${{ typeof A == "number" }}$;
 A ∈ numbers is ${{ typeof A == "number" }}$;
 A ∉ numbers is ${{ typeof A != "number" }}$;
 
+< A B is ${{ A < B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
+<= A B is ${{ A <= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
+> A B is ${{ A > B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
+>= A B is ${{ A >= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
+
 A < B is ${{ A < B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
 A <= B is ${{ A <= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
 A > B is ${{ A > B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
@@ -10,6 +15,16 @@ A >= B is ${{ A >= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
 
 A ≥ B is A >= B;
 A ≤ B is A <= B;
+
+* A B is ${{ A * B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
++ A B is ${{ A + B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
+- A B is ${{ A - B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
+/ A B is ${{ A / B }}$		when (A ∈ numbers) ∧ (B ∈ numbers) ∧ (B ≠ 0);
+^ A B is ${{ Math.pow(A,B) }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
+% A B is ${{ A % B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
+
+× A B is A * B				when (A ∈ numbers) ∧ (B ∈ numbers);
+÷ A B is A / B				when (A ∈ numbers) ∧ (B ∈ numbers);
 
 A * B is ${{ A * B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
 A + B is ${{ A + B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
@@ -21,6 +36,11 @@ A % B is ${{ A % B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
 A × B is A * B				when (A ∈ numbers) ∧ (B ∈ numbers);
 A ÷ B is A / B				when (A ∈ numbers) ∧ (B ∈ numbers);
 √ A is ${{ Math.sqrt(A) }}$	when (A ∈ numbers);
+
+max A B is A when (A > B);
+max A B is B when (A <= B);
+min A B is B when (A > B);
+min A B is A when (A <= B);
 
 math square root A is √ A;
 math round A is ${{ Math.round(A) }}$	when (A ∈ numbers);
