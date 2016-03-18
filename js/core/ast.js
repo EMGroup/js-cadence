@@ -202,7 +202,11 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 		}
 
 		if (this.type == "list") {
-			return "[" + res + "]";
+			if (res) {
+				return "[" + res + "]";
+			} else {
+				return "[]";
+			}
 		} else {
 			return res;
 		}
