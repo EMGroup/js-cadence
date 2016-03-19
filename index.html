@@ -34,20 +34,55 @@
 	Cadence.Storage.loadURL("library/vector.js-c");
 
 	window.onload = function() {
-		Cadence.Storage.loadURL("library/svg.js-c");
+		//Cadence.Storage.loadURL("library/svg.js-c");
 		Cadence.UI.makeScriptBox($("#cterminal").get(0));
 		Cadence.onoutput = function(res) {
-			console.log(res);
+			var ele = $("#cout").get(0);
+			if (res !== undefined) {
+				ele.innerHTML = JSON.stringify(res);
+			} else {
+				ele.innerHTML = "";
+			}
 		}
+
+		setInterval(function() {
+			var value = $("#search").get(0).value;
+			var paths = Cadence.concretePathStrings(value);
+			var res = $("#searchresults");
+
+			if (Cadence.initial === undefined) {
+				Cadence.initial = {};
+				for (var i=0; i<paths.length; i++) {
+					Cadence.initial[paths[i]] = true;
+				}
+				return;
+			}
+
+			res.empty();
+			var count = 0;
+			for (var i=0; i<paths.length; i++) {
+				if (Cadence.initial[paths[i]]) continue;
+				count++;
+				if (count > 40) break;
+				var ele = $('<div class="resultitem"></div>');
+				var val = Cadence.eval(value + " " + paths[i]+";");
+				if (Array.isArray(val)) val = Cadence.prettyPath(val);
+				ele.html(value + " " + paths[i] + " <span class=\"identity\">&#xf061;</span> "+val);
+				res.append(ele);
+			}
+		}, 400);
 	}
 	</script>
 </head>
 
 <body>
-<div id="cterminal" style="position: absolute; top: 100px; left: 100px; right: 100px; bottom: 100px;">
+<div id="cterminal" style="position: absolute; top: 100px; left: 100px; right: 390px; bottom: 240px;">
 </div>
-
-
+<div id="cout" style="position: absolute; left: 100px; right: 390px; bottom: 100px; height: 100px;"></div>
+<div id="cbrowse" style="position: absolute; top: 100px; width: 250px; right: 100px; bottom: 100px;">
+<div id="searchouter"><input type="text" id="search" placeholder="Search..."></input></div>
+<div id="searchresults"></div>
+</div>
 
 </body>
 </html>

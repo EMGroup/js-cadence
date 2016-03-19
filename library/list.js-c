@@ -30,7 +30,7 @@ map X A I is prepend (map X A (I + 1)) (X (list A I))		when (A ∈ lists) ∧ (I
 */
 
 /* JS Optimised Map */
-map X A is ${{ Cadence.opt.map(X, A) }}$			when ${{ Array.isArray(A) }}$;
+map X A is ${{ Cadence.opt.map(origin, X, A) }}$			when ${{ Array.isArray(A) }}$;
 
 foldl X Y A is foldl X Y A 0						when (A ∈ lists) ∧ (list A length > 0);
 foldl X Y A is Y									when (A ∈ lists) ∧ (list A length = 0);

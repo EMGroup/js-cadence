@@ -103,7 +103,7 @@ Cadence.SyntaxError.prototype.buildSuggestion = function() {
 
 Cadence.SyntaxError.prototype.messageText = function() {
 	var err = Cadence.SyntaxError.db[this.errno];
-	var txt = Language.errors[this.errno][err.message.call(this)]
+	var txt = "Error " + this.errno; //Language.errors[this.errno][err.message.call(this)]
 	if (this.extra === undefined) {
 		return txt;
 	} else {

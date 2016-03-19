@@ -1,8 +1,8 @@
 Cadence.opt = {
-	map: function(X, A) {
+	map: function(origin, X, A) {
 		var res = new Array(A.length);
 		var i = A.length;
-		while(i--) res[i] = Cadence.search([X, A[i]]);
+		while(i--) res[i] = Cadence.search([X, A[i]], origin);
 		return res;
 	}
 };

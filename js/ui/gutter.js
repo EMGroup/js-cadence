@@ -87,28 +87,29 @@ Cadence.UI.Gutter = function(parent, infob) {
 
 		// There is a statement on this line.
 		if (me.ast.lines[line]) {
-			var lines = me.ast.getBlockLines(line);
+			//var lines = me.ast.getBlockLines(line);
+			var i = line;
 
 			// If live already and no shift key
 			if (me.lines[line].live && !shiftdown) {
 				if (!me.lines[line].selected) {
 					// Make all lines of this statement block non-live
-					for (var i=lines[0]; i<=lines[1]; i++) {
+					//for (var i=lines[0]; i<=lines[1]; i++) {
 						me.lines[i].live = false;
 						changeClass(me.gutter.childNodes[i], "live", false);
-					}
+					//}
 				} else {
 					// Make all selected lines non-live
-					for (var i=0; i<me.lines.length; i++) {
+					//for (var i=0; i<me.lines.length; i++) {
 						if (me.lines[i].selected) {
 							me.lines[i].live = false;
 							changeClass(me.gutter.childNodes[i], "live", false);
 						}
-					}
+					//}
 				}
 			} else {
 				// For all lines associated with this statement block...
-				for (var i=lines[0]; i<=lines[1]; i++) {
+				//for (var i=lines[0]; i<=lines[1]; i++) {
 					// Invert selection if shift key
 					if (shiftdown) me.lines[i].selected = !me.lines[i].selected;
 					else me.lines[i].selected = true;
@@ -116,7 +117,7 @@ Cadence.UI.Gutter = function(parent, infob) {
 					// Update style
 					changeClass(me.gutter.childNodes[i], "select", me.lines[i].selected);
 					changeClass(me.gutter.childNodes[i], "hover", false);
-				}
+				//}
 			}
 		}
 		
@@ -149,11 +150,12 @@ Cadence.UI.Gutter = function(parent, infob) {
 				me.executeSelected();
 				if (!alreadyselected) {
 					if (me.ast.lines[downline]) {
-						var lines = me.ast.getBlockLines(downline);
-						for (var i=lines[0]; i<=lines[1]; i++) {
+						//var lines = me.ast.getBlockLines(downline);
+						var i = downline;
+						//for (var i=lines[0]; i<=lines[1]; i++) {
 							me.lines[i].selected = false;
 							changeClass(me.gutter.childNodes[i], "select", false);
-						}
+						//}
 					}
 				}
 			}
@@ -168,12 +170,12 @@ Cadence.UI.Gutter = function(parent, infob) {
 		var line = parseInt(e.target.getAttribute("data-line"));
 		if (shiftdown && dragselect) {
 			if (me.ast.lines[line]) {
-				var lines = me.ast.getBlockLines(line);
-				for (var i=lines[0]; i<=lines[1]; i++) {
+				//var lines = me.ast.getBlockLines(line);
+				var i = line; //for (var i=lines[0]; i<=lines[1]; i++) {
 					me.lines[i].selected = !alreadyselected;
 					changeClass(me.gutter.childNodes[i], "select", !alreadyselected);
 					changeClass(me.gutter.childNodes[i], "hover", false);
-				}
+				//}
 				//me.lines[line].selected = !me.lines[line].selected;
 				//changeClass(e.target, "select", me.lines[line].selected);
 				//dragselectcount++;
@@ -186,10 +188,11 @@ Cadence.UI.Gutter = function(parent, infob) {
 					//me.gutter.childNodes[line].innerHTML = ""; //<span class='eden-gutter-play'>&#xf04b;</span";
 					changeClass(me.gutter.childNodes[line], "play", true);
 				}
-				var lines = me.ast.getBlockLines(line);
-				for (var i=lines[0]; i<=lines[1]; i++) {
+				//var lines = me.ast.getBlockLines(line);
+				var i = line;
+				//for (var i=lines[0]; i<=lines[1]; i++) {
 					changeClass(me.gutter.childNodes[i], "hover", true);
-				}
+				//}
 			}
 		}
 	})
@@ -209,11 +212,12 @@ Cadence.UI.Gutter = function(parent, infob) {
 		//if (!dragselect) {
 			if (me.ast.lines[line]) {
 				//me.gutter.childNodes[line].innerHTML = "";
-				var lines = me.ast.getBlockLines(line);
-				for (var i=lines[0]; i<=lines[1]; i++) {
+				//var lines = me.ast.getBlockLines(line);
+				var i = line;
+				//for (var i=lines[0]; i<=lines[1]; i++) {
 					changeClass(me.gutter.childNodes[i], "hover", false);
 					changeClass(me.gutter.childNodes[i], "play", false);
-				}
+				//}
 			}
 		//}
 	});
@@ -250,9 +254,9 @@ Cadence.UI.Gutter.prototype.executeSelected = function() {
 
 	for (var i=0; i<this.lines.length; i++) {
 		if (this.lines[i].selected) {
-			var sellines = this.ast.getBlockLines(i);
+			//var sellines = this.ast.getBlockLines(i);
 			this.ast.executeLine(i);
-			i = sellines[1];
+			//i = sellines[1];
 		}
 	}
 }

@@ -363,6 +363,8 @@ Cadence.Parser.prototype.pSCRIPT = function() {
 			this.next();
 		}
 
+		endline = this.stream.line;
+
 		this.lines[curline] = stat;
 		//var endline = this.stream.line;
 		for (var i=curline+1; i<endline; i++) {
