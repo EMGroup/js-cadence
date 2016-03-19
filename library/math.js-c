@@ -53,8 +53,10 @@ math ceil A is ⎡ A ⎤;
 
 | A | is ${{ Math.abs(A) }}$	when (A ∈ numbers);
 
-math sum A 0 is list A 0	when A ∈ lists;
+/*math sum A 0 is list A 0	when A ∈ lists;
 math sum A is math sum A (list A length - 1)						when A ∈ lists;
-math sum A I is (list A I) + (math sum A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers);
+math sum A I is (list A I) + (math sum A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers);*/
+
+math sum A is foldl + 0 A;
 
 

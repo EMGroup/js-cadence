@@ -152,7 +152,7 @@ Cadence.AST.Path.prototype.addComponent = function(comp) {
 	}
 }
 
-Cadence.AST.Path.prototype.generate = function(ctx) {
+Cadence.AST.Path.prototype.generate = function(ctx, nosingle) {
 	if (this.components.length > 1) {
 		var res;
 		if (this.type == "path") res = "Cadence.search([";
@@ -161,7 +161,7 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 			var type = typeof this.components[i];
 			if (type == "object") {
 				if (this.components[i].type == "path") {
-					res += this.components[i].generate(ctx);
+					res += this.components[i].generate(ctx, true);
 				} else if (this.components[i].type == "list") {
 					res += this.components[i].generate(ctx);
 				} else if (this.components[i].type == "variable") {
@@ -186,7 +186,7 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 		var res;
 		if (type == "object") {
 			if (this.components[0].type == "path") {
-				res = this.components[0].generate(ctx);
+				res = this.components[0].generate(ctx, true);
 			} else if (this.components[0].type == "list") {
 				res = this.components[0].generate(ctx);
 			} else if (this.components[0].type == "javascript") {
@@ -208,7 +208,11 @@ Cadence.AST.Path.prototype.generate = function(ctx) {
 				return "[]";
 			}
 		} else {
-			return res;
+			//if (nosingle) {
+			//	return "Cadence.search(["+res+"])";
+			//} else {
+				return res;
+			//}
 		}
 	}
 }

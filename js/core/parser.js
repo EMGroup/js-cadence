@@ -111,8 +111,6 @@ Cadence.Parser.prototype.executeLine = function(lineno) {
 	//	line--;
 	//}
 
-	//console.log("Executeline: " + lineno);
-
 	var statement;
 	if (lineno == -1) {
 		statement = this.script;
@@ -166,12 +164,12 @@ Cadence.Parser.prototype.getBlockLines = function(lineno) {
  * Execute the given statement and catch any errors.
  */
 Cadence.Parser.prototype.executeStatement = function(statement, line) {
-	try {
-		statement.execute(eden.root,undefined, this);
-	} catch (e) {
-		eden.error(e);
-		//throw e;
-	}
+	var result;
+	var origin;
+	var source = statement.generate();
+	console.log(source);
+	eval("result = "+source+";");
+	Cadence.log(result);
 }
 
 
@@ -328,8 +326,11 @@ Cadence.Parser.prototype.peekNext = function(count) {
 
 Cadence.Parser.prototype.pSCRIPT = function() {
 	var script = new Cadence.AST.Script();
+	var stat;
 
 	while (this.stream.valid()) {
+		var curline = this.stream.line - 1;
+		var endline = -1;
 		var path = this.pPATH();
 
 		if (path.hasErrors()) {
@@ -340,6 +341,7 @@ Cadence.Parser.prototype.pSCRIPT = function() {
 		if (this.token == "is") {
 			var definition = this.pDEFINITION();
 			definition.addLHSPath(path);
+			stat = definition;
 			script.addDefinition(definition);
 			if (definition.hasErrors()) {
 				this.skipUntil(";");
@@ -356,8 +358,15 @@ Cadence.Parser.prototype.pSCRIPT = function() {
 				}
 			}
 		} else if (this.token == ";") {
+			stat = path;
 			script.addQuery(path);
 			this.next();
+		}
+
+		this.lines[curline] = stat;
+		//var endline = this.stream.line;
+		for (var i=curline+1; i<endline; i++) {
+			if (this.lines[i] === undefined || stat.errors.length > 0) this.lines[i] = stat;
 		}
 	}
 

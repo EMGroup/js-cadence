@@ -166,7 +166,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 				if (origin && (origin instanceof Cadence.Entry || origin instanceof Cadence.CacheEntry)) node.addDependency(origin);
 
 				// Is there more path to go?
-				if (i < path.length && i > 0) {
+				if (path.length > 1 && i < path.length) {
 					var npath = Array.prototype.concat.apply([result],path.slice(i));
 					//console.log(npath);
 					return Cadence.search(npath, origin);
@@ -253,6 +253,10 @@ Cadence.eval = function(str) {
 	//console.log(source);
 	eval(source).call(undefined);
 	return result;
+}
+
+Cadence.log = function(result) {
+	if (Cadence.onoutput) Cadence.onoutput(result);
 }
 
 
