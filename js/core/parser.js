@@ -437,6 +437,7 @@ Cadence.Parser.prototype.pPATH = function() {
 								break;
 		case "NUMBER"		:
 		case "BOOLEAN"		:
+		case "LABEL"		:
 		case "STRING"		:	path.addComponent(this.data.value);
 								this.next();
 								break;

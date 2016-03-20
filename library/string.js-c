@@ -6,6 +6,8 @@ A ∉ strings is ${{ typeof A != "string" }}$;
 A + B is ${{ A + B }}$	when (A ∈ strings);
 A concat B is ${{ "" + A + B }}$ when (A ∈ strings) ∨ (A ∈ numbers);
 concat A B is A concat B when (A ∈ strings) ∨ (A ∈ numbers);
+∙ A B is A concat B when (A ∈ strings) ∨ (A ∈ numbers);
+A ∙ B is ${{ "" + A + B }}$ when (A ∈ strings) ∨ (A ∈ numbers);
 
 A# is ${{ A.length }}$ when (A ∈ strings);
 #A is ${{ A.length }}$ when (A ∈ strings);

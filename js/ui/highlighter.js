@@ -325,6 +325,8 @@
 				} else if (token == "VARIABLE") {
 					classes += "eden-variable";
 				} else if (token == "STRING") {
+					classes += "eden-string";
+				} else if (token == "LABEL") {
 					if (edenFunctions[stream.data.value]) {
 						classes += "eden-function";
 					} else if (Cadence.UI.Highlight.isType(stream.data.value)) {

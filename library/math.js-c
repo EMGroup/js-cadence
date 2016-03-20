@@ -2,58 +2,60 @@ numbers A is ${{ typeof A == "number" }}$;
 
 A ∈ numbers is ${{ typeof A == "number" }}$;
 A ∉ numbers is ${{ typeof A != "number" }}$;
+A ∈ ℝ is ${{ typeof A == "number" }}$;
+A ∉ ℝ is ${{ typeof A != "number" }}$;
 
-< A B is ${{ A < B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-<= A B is ${{ A <= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
-> A B is ${{ A > B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
->= A B is ${{ A >= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
+< A B is ${{ A < B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+<= A B is ${{ A <= B }}$	when (A ∈ ℝ) ∧ (B ∈ ℝ);
+> A B is ${{ A > B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+>= A B is ${{ A >= B }}$	when (A ∈ ℝ) ∧ (B ∈ ℝ);
 
-A < B is ${{ A < B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-A <= B is ${{ A <= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
-A > B is ${{ A > B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-A >= B is ${{ A >= B }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
+A < B is ${{ A < B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A <= B is ${{ A <= B }}$	when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A > B is ${{ A > B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A >= B is ${{ A >= B }}$	when (A ∈ ℝ) ∧ (B ∈ ℝ);
 
 A ≥ B is A >= B;
 A ≤ B is A <= B;
 
-* A B is ${{ A * B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-+ A B is ${{ A + B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-- A B is ${{ A - B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-/ A B is ${{ A / B }}$		when (A ∈ numbers) ∧ (B ∈ numbers) ∧ (B ≠ 0);
-^ A B is ${{ Math.pow(A,B) }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
-% A B is ${{ A % B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
+* A B is ${{ A * B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
++ A B is ${{ A + B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+- A B is ${{ A - B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+/ A B is ${{ A / B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ) ∧ (B ≠ 0);
+^ A B is ${{ Math.pow(A,B) }}$	when (A ∈ ℝ) ∧ (B ∈ ℝ);
+% A B is ${{ A % B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
 
-× A B is A * B				when (A ∈ numbers) ∧ (B ∈ numbers);
-÷ A B is A / B				when (A ∈ numbers) ∧ (B ∈ numbers);
+× A B is A * B				when (A ∈ ℝ) ∧ (B ∈ ℝ);
+÷ A B is A / B				when (A ∈ ℝ) ∧ (B ∈ ℝ);
 
-A * B is ${{ A * B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-A + B is ${{ A + B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-A - B is ${{ A - B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
-A / B is ${{ A / B }}$		when (A ∈ numbers) ∧ (B ∈ numbers) ∧ (B ≠ 0);
-A ^ B is ${{ Math.pow(A,B) }}$	when (A ∈ numbers) ∧ (B ∈ numbers);
-A % B is ${{ A % B }}$		when (A ∈ numbers) ∧ (B ∈ numbers);
+A * B is ${{ A * B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A + B is ${{ A + B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A - B is ${{ A - B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A / B is ${{ A / B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ) ∧ (B ≠ 0);
+A ^ B is ${{ Math.pow(A,B) }}$	when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A % B is ${{ A % B }}$		when (A ∈ ℝ) ∧ (B ∈ ℝ);
 
-A × B is A * B				when (A ∈ numbers) ∧ (B ∈ numbers);
-A ÷ B is A / B				when (A ∈ numbers) ∧ (B ∈ numbers);
-√ A is ${{ Math.sqrt(A) }}$	when (A ∈ numbers);
+A × B is A * B				when (A ∈ ℝ) ∧ (B ∈ ℝ);
+A ÷ B is A / B				when (A ∈ ℝ) ∧ (B ∈ ℝ);
+√ A is ${{ Math.sqrt(A) }}$	when (A ∈ ℝ);
 
 max A B is A when (A > B);
 max A B is B when (A <= B);
 min A B is B when (A > B);
 min A B is A when (A <= B);
-max A is foldl1 max A when (A ∈ lists) ∧ (list A length > 2);
-min A is foldl1 min A when (A ∈ lists) ∧ (list A length > 2);
+max A is foldl1 max A when (A ∈ lists) ∧ (A # > 2);
+min A is foldl1 min A when (A ∈ lists) ∧ (A # > 2);
 
 math square root A is √ A;
-math round A is ${{ Math.round(A) }}$	when (A ∈ numbers);
+math round A is ${{ Math.round(A) }}$	when (A ∈ ℝ);
 math floor A is ⎣ A ⎦;
 math ceil A is ⎡ A ⎤;
 
-⎣ A ⎦ is ${{ Math.floor(A) }}$	when (A ∈ numbers);
+⎣ A ⎦ is ${{ Math.floor(A) }}$	when (A ∈ ℝ);
 
-⎡ A ⎤ is ${{ Math.ceil(A) }}$	when (A ∈ numbers);
+⎡ A ⎤ is ${{ Math.ceil(A) }}$	when (A ∈ ℝ);
 
-| A | is ${{ Math.abs(A) }}$	when (A ∈ numbers);
+| A | is ${{ Math.abs(A) }}$	when (A ∈ ℝ);
 
 /*math sum A 0 is list A 0	when A ∈ lists;
 math sum A is math sum A (list A length - 1)						when A ∈ lists;

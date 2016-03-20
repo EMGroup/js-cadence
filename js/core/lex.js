@@ -184,7 +184,7 @@ Cadence.Stream.prototype.isNumeric = function(ch) {
  * Used in error context checking.
  */
 Cadence.Stream.prototype.tokenType = function(token) {
-	if (token == "OBSERVABLE" || token == "VARIABLE") {
+	if (token == "OBSERVABLE" || token == "VARIABLE" || token == "LABEL") {
 		return "identifier";
 	}
 	if (token == "JAVASCRIPT") {
@@ -429,7 +429,7 @@ Cadence.Stream.prototype.readToken = function() {
 		}
 		
 		if (ch >= 65 && ch <= 90) return "VARIABLE";
-		return "STRING";
+		return "LABEL";
 	}
 
 	// Ignore invalid tokens
