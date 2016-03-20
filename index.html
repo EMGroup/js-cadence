@@ -28,6 +28,7 @@
 	Cadence.Storage.loadURL("library/boolean.js-c");
 	Cadence.Storage.loadURL("library/conditional.js-c");
 	Cadence.Storage.loadURL("library/list.js-c");
+	Cadence.Storage.loadURL("library/functional.js-c");
 	Cadence.Storage.loadURL("library/string.js-c");
 	Cadence.Storage.loadURL("library/math.js-c");
 	Cadence.Storage.loadURL("library/units.js-c");
@@ -39,11 +40,14 @@
 		Cadence.onoutput = function(res) {
 			var ele = $("#cout").get(0);
 			if (res !== undefined) {
-				ele.innerHTML = JSON.stringify(res);
+				ele.innerHTML += "<b>&gt;&gt;</b> "+JSON.stringify(res)+"<br/>";
+				ele.scrollTop = ele.scrollHeight;
 			} else {
-				ele.innerHTML = "";
+				//ele.innerHTML += "";
 			}
 		}
+
+		Cadence.log("Welcome to the Cadence demo page...");
 
 		setInterval(function() {
 			var value = $("#search").get(0).value;
@@ -71,15 +75,22 @@
 				res.append(ele);
 			}
 		}, 400);
+
+		/*var starttime = Date.now();
+		setInterval(function() {
+			var now = Date.now();	
+			Cadence.define(["global","tick"], function() { return (now - starttime) / 1000; }, undefined);
+		}, 50);*/
 	}
 	</script>
 </head>
 
 <body>
-<div id="cterminal" style="position: absolute; top: 100px; left: 100px; right: 390px; bottom: 240px;">
+<div id="cterminal" style="position: absolute; top: 20px; left: 20px; width: calc(100% - 710px); bottom: 140px;">
 </div>
-<div id="cout" style="position: absolute; left: 100px; right: 390px; bottom: 100px; height: 100px;"></div>
-<div id="cbrowse" style="position: absolute; top: 100px; width: 250px; right: 100px; bottom: 100px;">
+<div id="svgout" style="position: absolute; top: 20px; right: 270px; bottom: 140px; width: 400px;"></div>
+<div id="cout" style="position: absolute; left: 0; right: 250px; bottom: 0; height: 100px;"></div>
+<div id="cbrowse" style="position: absolute; top: 0; width: 250px; right: 0; bottom: 0;">
 <div id="searchouter"><input type="text" id="search" placeholder="Search..."></input></div>
 <div id="searchresults"></div>
 </div>

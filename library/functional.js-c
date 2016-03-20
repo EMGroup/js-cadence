@@ -1,0 +1,38 @@
+/* Functional language */
+
+/* Unoptimised pure implementation of map
+map X A is map X A 0									when (A ∈ lists) ∧ (A# > 0);
+map X A is []											when (A ∈ lists) ∧ (A# = 0);
+map X A I is [(X (A at I))]								when (A ∈ lists) ∧ (I = (A# - 1));
+map X A I is prepend (map X A (I + 1)) (X (A at I))		when (A ∈ lists) ∧ (I < (A# - 1));
+*/
+
+/* JS Optimised Map */
+map X A is ${{ Cadence.opt.map(origin, X, A) }}$		when ${{ Array.isArray(A) }}$;
+
+curry F A is [F A];
+
+foldl X Y A is foldl X Y A 0						when (A ∈ lists) ∧ (A# > 0);
+foldl X Y A is Y									when (A ∈ lists) ∧ (A# = 0);
+foldl X Y A I is X Y (A at 0)						when (A ∈ lists) ∧ (I = (A# - 1));
+foldl X Y A I is X (foldl X Y A (I + 1)) (A at (A# - I - 1))	when (A ∈ lists) ∧ (I < (A# - 1));
+
+foldr X Y A is foldr X Y A 0						when (A ∈ lists) ∧ (A# > 0);
+foldr X Y A is Y									when (A ∈ lists) ∧ (A# = 0);
+foldr X Y A I is X (A at I) Y						when (A ∈ lists) ∧ (I = (A# - 1));
+foldr X Y A I is X (A at I) (foldr X Y A (I + 1))	when (A ∈ lists) ∧ (I < (A# - 1));
+
+foldl1 X A is foldl1 X A 0							when (A ∈ lists) ∧ (A# > 0);
+foldl1 X A I is A at 0								when (A ∈ lists) ∧ (I = (A# - 1));
+foldl1 X A I is X (foldl1 X A (I + 1)) (A at (A# - I - 1))		when (A ∈ lists) ∧ (I < (A# - 1));
+
+foldr1 X A is foldr1 X A 0							when (A ∈ lists) ∧ (A# > 0);
+foldr1 X A I is A at I								when (A ∈ lists) ∧ (I = (A# - 1));
+foldr1 X A I is X (A at I) (foldr1 X A (I + 1))		when (A ∈ lists) ∧ (I < (A# - 1));
+
+filter X A is filter X A (A# - 1)					when (A ∈ lists);
+filter X A 0 is [(A at (A# - 1))]					when (A ∈ lists) ∧ (X (A at (A# - 1)));
+filter X A 0 is []									when (A ∈ lists) ∧ (not (X (A at (A# - 1))));
+filter X A I is concat [(A at (A# - I - 1))] (filter X A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers) ∧ (X (A at (A# - I - 1)));
+filter X A I is filter X A (I - 1)	when (A ∈ lists) ∧ (I ∈ numbers) ∧ (not (X (A at (A# - I - 1))));
+
