@@ -1,0 +1,23 @@
+A ∈ domelements is ${{ A instanceof Element }}$;
+A ∉ domelements is ${{ !(A instanceof Element) }}$;
+
+A attribute B C is ${{ (function() { A.setAttribute(B, C); return A;})() }}$;
+
+/*html element appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$;*/
+A appendChild B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
+appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
+
+A removeChild B is ${{ (function() { A.removeChild(B); return A;})() }}$ when (A ∈ domelements);
+A lastChild is ${{ A.lastChild }}$ when (A ∈ domelements);
+/*A children is ${{ A.childNodes }}$ when (A ∈ htmlelements);*/
+html element A is ${{ document.createElement(A) }}$;
+html body is ${{ document.body }}$;
+html with id A is ${{ document.getElementById(A) }}$;
+
+A removeAll is A removeChild (A lastChild) removeAll when (A ∈ domelements) ∧ (A lastChild);
+A removeAll is A when (A ∈ domelements) ∧ (!(A lastChild));
+
+html div A is _ html (html element div) A content;
+_ html A B content is foldl appendChild (A removeAll) (B children) when (A ∈ domelements) ∧ (B children);
+_ html A B content is A when (A ∈ domelements) ∧ (!(B children));
+

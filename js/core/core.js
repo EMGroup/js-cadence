@@ -8,10 +8,11 @@ Cadence.Entry = function(parent, name) {
 	this.pattern = false;
 }
 
-Cadence.Part = function(def, cond, time) {
+Cadence.Part = function(def, cond, time, dynamic) {
 	this.definition = def;
 	this.condition = cond;
 	this.timestamp = time;
+	this.dynamic = dynamic;
 	//this.dependants = [];
 	this.cache = undefined;
 	//this.out_of_date = true;
@@ -134,10 +135,10 @@ Cadence.search = function(path, origin) { //, base, index) {
 			if (node.parts[j].condition === undefined || (cond && cond != "false")) {
 				//console.log(path);
 				if (node.pattern) {
-					var pathstr = Cadence.pathToString(path, i); //path.slice(0,i+1).join(" ");
+					var pathstr = (node.parts[j].dynamic) ? undefined : Cadence.pathToString(path, i); //path.slice(0,i+1).join(" ");
 					if (pathstr) {
 						var cache = Cadence.cache[pathstr];
-						if (Cadence.cache[pathstr] === undefined) {
+						if (!Cadence.cache.hasOwnProperty(pathstr)) {
 							cache = new Cadence.CacheEntry();
 							Cadence.cache[pathstr] = cache;
 						}
@@ -214,7 +215,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 	}
 }
 				
-Cadence.define = function(path, def, cond) {
+Cadence.define = function(path, def, cond, dynamic) {
 	var current = this.tree;
 	var parent = undefined;
 	var pattern = false;
@@ -235,7 +236,7 @@ Cadence.define = function(path, def, cond) {
 	}
 
 	current.pattern = pattern;
-	current.parts.unshift(new Cadence.Part(def, cond, Date.now()));
+	current.parts.unshift(new Cadence.Part(def, cond, Date.now(), dynamic));
 	current.expire();
 
 	var pathstr = Cadence.pathToString(path,path.length);
@@ -250,7 +251,7 @@ Cadence.eval = function(str) {
 	var ast = new Cadence.Parser(str);
 	ast.parse();
 	var source = ast.generate();
-	//console.log(source);
+	//console.log(str);
 	eval(source).call(undefined);
 	return result;
 }

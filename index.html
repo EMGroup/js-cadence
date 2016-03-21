@@ -34,9 +34,9 @@
 	Cadence.Storage.loadURL("library/units.js-c");
 	Cadence.Storage.loadURL("library/vector.js-c");
 	Cadence.Storage.loadURL("library/set.js-c");
+	Cadence.Storage.loadURL("library/html.js-c");
 
 	window.onload = function() {
-		//Cadence.Storage.loadURL("library/svg.js-c");
 		Cadence.UI.makeScriptBox($("#cterminal").get(0));
 		Cadence.onoutput = function(res) {
 			var ele = $("#cout").get(0);
@@ -60,6 +60,7 @@
 				for (var i=0; i<paths.length; i++) {
 					Cadence.initial[paths[i]] = true;
 				}
+				Cadence.Storage.loadURL("library/svg.js-c");
 				return;
 			}
 
@@ -71,7 +72,7 @@
 				if (count > 40) break;
 				var ele = $('<div class="resultitem"></div>');
 				var val = Cadence.eval(value + " " + paths[i]+";");
-				if (Array.isArray(val)) val = Cadence.prettyPath(val);
+				//if (Array.isArray(val)) val = Cadence.prettyPath(val);
 				ele.html(value + " " + paths[i] + " <span class=\"identity\">&#xf061;</span> "+val);
 				res.append(ele);
 			}
@@ -87,11 +88,12 @@
 </head>
 
 <body>
-<div id="cterminal" style="position: absolute; top: 20px; left: 20px; width: calc(100% - 710px); bottom: 140px;">
+<div id="menubar" style="position: absolute; top: 0; left: 0; right: 0; height: 40px;"></div>
+<div id="cterminal" style="position: absolute; top: 40px; left: 0; width: calc(100% - 690px); bottom: 100px;">
 </div>
-<div id="svgout" style="position: absolute; top: 20px; right: 270px; bottom: 140px; width: 400px;"></div>
+<div id="svgout" style="position: absolute; top: 60px; right: 270px; bottom: 140px; width: 400px;"></div>
 <div id="cout" style="position: absolute; left: 0; right: 250px; bottom: 0; height: 100px;"></div>
-<div id="cbrowse" style="position: absolute; top: 0; width: 250px; right: 0; bottom: 0;">
+<div id="cbrowse" style="position: absolute; top: 40px; width: 250px; right: 0; bottom: 0;">
 <div id="searchouter"><input type="text" id="search" placeholder="Search..."></input></div>
 <div id="searchresults"></div>
 </div>

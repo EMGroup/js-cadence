@@ -18,10 +18,20 @@ div#cterminal {
 	box-shadow: 0 0 10px #719ECE;
 }
 
+div#svgout {
+	background-color: white;
+}
+
+div#menubar {
+	background-color: #eee;
+	z-index: 1000;
+	box-shadow: 0 0 15px #445f7b;
+}
+
 div#cout {
 	border-top: 1px solid #777;
 	border-radius: 5px;
-	box-shadow: 0 0 10px #719ECE;
+	box-shadow: 0 0 15px #445f7b;
 	background: #333;
 	font: 12px/16px Roboto Mono,monospace;
 	color: #eee;

@@ -1,7 +1,7 @@
 A ∈ sets is (A ∈ lists) ∧ (A at 0 = _set);
 A ∉ sets is ¬(A ∈ sets);
 
-/* All variations of getting a lists length */
+/* All variations of getting a sets size */
 |A| is ${{ A[1].length }}$		when (A ∈ sets) ∧ (A at 1 ∈ lists);
 A size is ${{ A[1].length }}$	when (A ∈ sets) ∧ (A at 1 ∈ lists);
 size A is ${{ A[1].length }}$	when (A ∈ sets) ∧ (A at 1 ∈ lists);
@@ -11,6 +11,19 @@ size A is ${{ A[1].length }}$	when (A ∈ sets) ∧ (A at 1 ∈ lists);
 
 A ∈ B is ${{ B[1].indexOf(A) >= 0 }}$	when (B ∈ sets) ∧ (B at 1 ∈ lists);
 _expreplace A B C is C if (C != A) else B;
-eval A is A when (A ∉ lists);
+
 A ∈ B is eval(map [_expreplace (B at 2) A] (B at 3)) when (B ∈ sets) ∧ (B# > 2);
+
+//A ⊂ B is
+//A ⊃ B is
+//A ⊆ B is
+//A ⊇ B is
+//A ⊄ B is
+//A ⊅ B is 
+//∀
+//∃
+//∄
+
+//A = ∅
+//∅ = A
 

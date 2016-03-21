@@ -1,5 +1,5 @@
-A ∈ vectors2d is (list A 0 = _vector2);
-A ∈ vectors3d is (list A 0 = _vector3);
+A ∈ vectors2d is (A at 0 = _vector2);
+A ∈ vectors3d is (A at 0 = _vector3);
 
 vector X Y is [_vector2 X Y]		when (X ∈ numbers) ∧ (Y ∈ numbers);
 vector X Y Z is [_vector3 X Y Z]	when (X ∈ numbers) ∧ (Y ∈ numbers) ∧ (Z ∈ numbers);

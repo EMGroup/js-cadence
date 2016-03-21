@@ -127,7 +127,7 @@ Cadence.AST.Definition.prototype.generate = function() {
 
 	var res = "\tCadence.define(\n\t\t" + lhs
 				+ ",\n\t\tfunction("+params+") { var origin = this; return " + this.path.generate(this)
-				+ "; },\n\t\t"+((this.condition) ? "function("+params+") { var origin = this; return "+ this.condition.generate(this) + "; }" : "undefined") + "\n\t)";
+				+ "; },\n\t\t"+((this.condition) ? "function("+params+") { var origin = this; return "+ this.condition.generate(this) + "; }" : "undefined") + ","+ this.path.hasJavascript + "\n\t)";
 	return res;
 }
 

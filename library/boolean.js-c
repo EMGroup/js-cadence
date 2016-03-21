@@ -5,6 +5,8 @@ booleans false is true;
 ! false is true;
 ! 0 is true;
 ! A is false when (A ∈ numbers);
+! A is true when ${{ A === undefined }}$;
+! A is true when ${{ A == null }}$;
 
 ¬ A is ! A;
 
@@ -20,6 +22,12 @@ false && true is false;
 0 && A is false;
 A && 0 is false;
 A && B is true when (A ∈ numbers) ∧ (B ∈ numbers);
+true && A is true when ${{ A && A }}$;
+A && true is true when ${{ A && A }}$;
+true && A is false when ${{ !A }}$;
+A && true is false when ${{ !A }}$;
+false && A is false;
+A && false is false;
 
 A ∧ B is A && B;
 
