@@ -63,10 +63,15 @@ Cadence.CacheEntry.prototype.update = function(value) {
 Cadence.CacheEntry.prototype.expire = function() {
 	if (this.expired) return;
 	this.expired = true;
-	var olddeps = this.dependants;
-	this.dependants = [];
-	for (var i=0; i<olddeps.length; i++) {
-		olddeps[i].expire();
+	var oldval = this.value;
+	this.value = this.part.evaluate(this, this.variables);
+	this.expired = false;
+	if (this.value !== oldval) {
+		var olddeps = this.dependants;
+		this.dependants = [];
+		for (var i=0; i<olddeps.length; i++) {
+			olddeps[i].expire();
+		}
 	}
 }
 
@@ -88,11 +93,14 @@ Cadence.pathToString = function(path, end) {
 		if (type == "object") {
 			if (Array.isArray(path[i])) {
 				res += "["+Cadence.pathToString(path[i], path[i].length) + "]";
+			} else if (path[i] instanceof Element) {
+				res += "\""+path[i].id+"\"";
 			} else {
 				return undefined;
 			}
+		} else {
+			res += "\""+path[i]+"\"";
 		}
-		res += "\""+path[i]+"\"";
 	}
 	return res;
 }
@@ -141,6 +149,8 @@ Cadence.search = function(path, origin) { //, base, index) {
 						if (!Cadence.cache.hasOwnProperty(pathstr)) {
 							cache = new Cadence.CacheEntry();
 							Cadence.cache[pathstr] = cache;
+							cache.variables = variables;
+							cache.part = node.parts[j];
 						}
 
 						if (!(cache.expired)) {

@@ -10,14 +10,14 @@ appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A
 A removeChild B is ${{ (function() { A.removeChild(B); return A;})() }}$ when (A ∈ domelements);
 A lastChild is ${{ A.lastChild }}$ when (A ∈ domelements);
 /*A children is ${{ A.childNodes }}$ when (A ∈ htmlelements);*/
-html element A is ${{ document.createElement(A) }}$;
+html element A B is ${{ (function (){ var ele = document.createElement(A); ele.setAttribute("id", "HTMLDOM-"+B); return ele; })() }}$;
 html body is ${{ document.body }}$;
 html with id A is ${{ document.getElementById(A) }}$;
 
 A removeAll is A removeChild (A lastChild) removeAll when (A ∈ domelements) ∧ (A lastChild);
 A removeAll is A when (A ∈ domelements) ∧ (!(A lastChild));
 
-html div A is _ html (html element div) A content;
+html div A is _ html (html element div A) A content;
 _ html A B content is foldl appendChild (A removeAll) (B children) when (A ∈ domelements) ∧ (B children);
 _ html A B content is A when (A ∈ domelements) ∧ (!(B children));
 
