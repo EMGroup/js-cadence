@@ -9,13 +9,7 @@ svg line A is _svgline (_svgline (_ html (svg element path A) A content) A shape
 _svgline A B shape is A attribute d ("M " + (B a x) + " " + (B a y) + " L " + (B b x) + " " + (B b y));
 _svgline A B colour is A attribute style ("stroke: " + (B colour) + "; stroke-width: " + (B width) + "px;");
 
-my a is vector 10 10;
-my length is 10;
-my b is (my a) × (my length);
-my colour is "pink";
-my width is 4;
-
-picture children is [(svg line my)];
+picture children is [];
 
 svg root is svg svg picture attribute width 300 attribute height 300;
 html with id svgout appendChild (svg root);
