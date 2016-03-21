@@ -1,0 +1,6 @@
+joinfunc A is "[" + (foldr1 ∙ A) + "]" when A ∈ lists;
+joinfunc A is , when A = ,;
+
+A << B is A + " is " + ("Insert with tuples is [" + (foldr1 ∙ (map joinfunc B))) + "];";
+
+apples << [[5,6,7],[4,4,4]];

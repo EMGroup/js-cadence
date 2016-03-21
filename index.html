@@ -7,6 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="css/cadence.css" />
 
 	<script type="text/javascript" src="js/lib/jquery-2.2.2.min.js"></script>
+	<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+	<script src="js/lib/url.js"></script>
 
 	<script>Cadence = { };</script>
 
@@ -37,15 +39,17 @@
 	Cadence.Storage.loadURL("library/html.js-c");
 
 	window.onload = function() {
-		Cadence.UI.makeScriptBox($("#cterminal").get(0));
+		Cadence.Storage.loadURL("library/svg.js-c");
+
+		var sbox = Cadence.UI.makeScriptBox($("#cterminal").get(0));
 		Cadence.onoutput = function(res) {
-			var ele = $("#cout").get(0);
+			/*var ele = $("#cout").get(0);
 			if (res !== undefined) {
 				ele.innerHTML += "<b>&gt;&gt;</b> "+JSON.stringify(res)+"<br/>";
 				ele.scrollTop = ele.scrollHeight;
 			} else {
 				//ele.innerHTML += "";
-			}
+			}*/
 		}
 
 		Cadence.log("Welcome to the Cadence demo page...");
@@ -60,7 +64,13 @@
 				for (var i=0; i<paths.length; i++) {
 					Cadence.initial[paths[i]] = true;
 				}
-				Cadence.Storage.loadURL("library/svg.js-c");
+				var file = URLUtil.getParameterByName("file");
+				if (file) {
+					$.get(file, function(data) {
+						sbox.setValue(data);
+						sbox.execute();
+					});
+				}
 				return;
 			}
 
@@ -73,7 +83,7 @@
 				var ele = $('<div class="resultitem"></div>');
 				var val = Cadence.eval(value + " " + paths[i]+";");
 				//if (Array.isArray(val)) val = Cadence.prettyPath(val);
-				ele.html(value + " " + paths[i] + " <span class=\"identity\">&#xf061;</span> "+val);
+				ele.html(paths[i] + " <span class=\"identity\">&#xf061;</span> "+val);
 				res.append(ele);
 			}
 		}, 400);
@@ -88,11 +98,12 @@
 </head>
 
 <body>
-<div id="menubar" style="position: absolute; top: 0; left: 0; right: 0; height: 40px;"></div>
-<div id="cterminal" style="position: absolute; top: 40px; left: 0; width: calc(100% - 690px); bottom: 100px;">
+<div id="menubar" style="position: absolute; top: 0; left: 0; right: 0; height: 40px;">
+<div class="titletext">JS-Cadence Demos</div>
 </div>
-<div id="svgout" style="position: absolute; top: 60px; right: 270px; bottom: 140px; width: 400px;"></div>
-<div id="cout" style="position: absolute; left: 0; right: 250px; bottom: 0; height: 100px;"></div>
+<div id="cterminal" style="position: absolute; top: 40px; left: 30px; width: 670px; bottom: 0;">
+</div>
+<div id="svgout" style="position: absolute; top: 40px; right: 250px; bottom: 0; left: 700px;"></div>
 <div id="cbrowse" style="position: absolute; top: 40px; width: 250px; right: 0; bottom: 0;">
 <div id="searchouter"><input type="text" id="search" placeholder="Search..."></input></div>
 <div id="searchresults"></div>

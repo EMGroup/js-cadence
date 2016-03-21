@@ -1,0 +1,17 @@
+my a is vector 10 10;
+my length is 10;
+my b is (my a) × (my length);
+my colour is "pink";
+my width is 4;
+
+my2 a is vector 10 10;
+my2 b is vector 20 200;
+my2 colour is "green";
+my2 width is 4;
+
+my3 a is my b;
+my3 b is my2 b;
+my3 colour is "red";
+my3 width is 4;
+
+picture children is [(svg line my) (svg line my2) (svg line my3)];

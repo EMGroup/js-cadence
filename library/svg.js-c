@@ -5,12 +5,12 @@ svg element A B is ${{ (function (){ var ele = document.createElementNS("http://
 
 svg svg A is _ html (svg element svg A) A content;
 
-svg line A is _svgline (_svgline (_ html (svg element path A) A content) A shape) A colour;
+line A is _svgline (_svgline (_ html (svg element path A) A content) A shape) A colour;
 _svgline A B shape is A attribute d ("M " + (B a x) + " " + (B a y) + " L " + (B b x) + " " + (B b y));
 _svgline A B colour is A attribute style ("stroke: " + (B colour) + "; stroke-width: " + (B width) + "px;");
 
 picture children is [];
 
-svg root is svg svg picture attribute width 300 attribute height 300;
+svg root is svg svg picture attribute width "100%" attribute height "100%";
 html with id svgout appendChild (svg root);
 

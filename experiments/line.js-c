@@ -1,0 +1,10 @@
+/*
+ * Lines must have an a, b, colour and width. a and b are the start and
+ * end points of the line which should be 2D vectors.
+ */
+my a is vector 10 10;
+my b is vector 100 100;
+my colour is "green";
+my width is 4;
+
+picture children is [(line my)];

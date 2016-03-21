@@ -216,7 +216,7 @@ function getStartCaretCharacterOffsetWithin(element) {
 		var edited = false;
 		var dirty = false;
 		var tabscrollix = 0;
-		var readonly = true;
+		var readonly = false;
 		var showhidden = false;
 		var inspectmode = false;
 
@@ -1180,7 +1180,9 @@ function getStartCaretCharacterOffsetWithin(element) {
 					//maxtabs = Math.floor((ui.size.width - 90) / 160);
 				}
 			},
-			setValue: function (value) { intextarea.value = value; updateEntireHighlight(); }
+			setValue: function (value) { intextarea.value = value; updateEntireHighlight(); },
+
+			execute: function() { var result; if (ast) eval(ast.generate()).call(undefined); return result; }
 		}
 
 		// Initialise highlight content
@@ -1198,6 +1200,7 @@ function getStartCaretCharacterOffsetWithin(element) {
 		var viewdata = createCommon("noname", "notitle", content, true);
 		container.innerHTML = "";
 		container.appendChild(viewdata.contents.get(0));
+		return viewdata;
 	}
 
 

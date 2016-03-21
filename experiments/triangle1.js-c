@@ -1,0 +1,24 @@
+triangle centre is vector 100 200;
+
+triangle length a is 100;
+triangle length b is 120;
+
+triangle line 1 a is triangle centre;
+triangle line 1 b is (triangle centre) - (vector 0 (triangle length a));
+triangle line 2 a is triangle centre;
+triangle line 2 b is (triangle centre) + (vector (triangle length b) 0);
+triangle line 3 a is triangle line 1 b;
+triangle line 3 b is triangle line 2 b;
+
+triangle line 1 colour is "blue";
+triangle line 2 colour is "red";
+triangle line 3 colour is "#00ee00";
+triangle line 1 width is 3;
+triangle line 2 width is 3;
+triangle line 3 width is 3;
+
+picture children is [
+	(line [triangle line 1])
+	(line [triangle line 2])
+	(line [triangle line 3])
+];

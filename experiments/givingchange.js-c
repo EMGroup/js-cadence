@@ -1,0 +1,16 @@
+.amount is 8;
+coin list is [];
+
+.denominations is [1 2 5 10 20 50 100 200];
+
+amount left is .amount - (math sum(coin list));
+
+gtdenom A is 1 if (amount left >= A) else 0;
+allowed denominations is map gtdenom (.denominations);
+
+index of largest is math sum(allowed denominations) - 1;
+
+largest allowed denomination is .denominations at (index of largest);
+
+largest allowed denomination;
+
