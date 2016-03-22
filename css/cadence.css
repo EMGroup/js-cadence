@@ -34,11 +34,27 @@ div#menubar {
 	box-shadow: 0 0 15px #354a5f;
 }
 
+div.mainmenu {
+	margin: 0;
+	height: 50px;
+	background-color: #719ECE;
+	font-family: "FontAwesome";
+	font-size: 20pt;
+	color: white;
+	padding: 5px;
+	padding-top: 10px;
+	width: 70px;
+	float: left;
+	box-sizing: border-box;
+	text-align: center;
+}
+
 div.titletext {
+	float: left;
 	font-family: Arial, sans-serif;
-	font-size: 18pt;
-	color: #ccc;
-	margin-left: 60px;
+	font-size: 14pt;
+	color: #888;
+	margin-left: 50px;
 	font-weight: bold;
 	margin-top: 4px;
 }

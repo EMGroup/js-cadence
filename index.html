@@ -69,6 +69,7 @@
 					$.get(file, function(data) {
 						sbox.setValue(data);
 						sbox.execute();
+						$('.titletext').html(file);
 					});
 				}
 				return;
@@ -98,13 +99,14 @@
 </head>
 
 <body>
-<div id="menubar" style="position: absolute; top: 0; left: 0; right: 0; height: 40px;">
+<div id="menubar" style="position: absolute; top: 0; left: 0; right: 0; height: 50px;">
+<div class="mainmenu">&#xf0c2;</div>
 <div class="titletext">JS-Cadence Demos</div>
 </div>
-<div id="cterminal" style="position: absolute; top: 40px; left: 30px; width: 670px; bottom: 0;">
+<div id="cterminal" style="position: absolute; top: 50px; left: 30px; width: 670px; bottom: 0;">
 </div>
-<div id="svgout" style="position: absolute; top: 40px; right: 250px; bottom: 0; left: 700px;"></div>
-<div id="cbrowse" style="position: absolute; top: 40px; width: 250px; right: 0; bottom: 0;">
+<div id="svgout" style="position: absolute; top: 50px; right: 250px; bottom: 0; left: 700px;"></div>
+<div id="cbrowse" style="position: absolute; top: 50px; width: 250px; right: 0; bottom: 0;">
 <div id="searchouter"><input type="text" id="search" placeholder="Search..."></input></div>
 <div id="searchresults"></div>
 </div>
