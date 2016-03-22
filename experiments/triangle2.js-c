@@ -1,12 +1,12 @@
-triangle centre is ⟨ 100,200 ⟩;
+triangle centre is ⟨100,200⟩;
 
 length a is 100;
 length b is 120;
 
 triangle 1 a is triangle centre;
-triangle 1 b is (triangle centre) - (⟨ 0,(length a) ⟩);
+triangle 1 b is triangle centre - ⟨0,(length a)⟩;
 triangle 2 a is triangle centre;
-triangle 2 b is (triangle centre) + (⟨ (length b),0 ⟩);
+triangle 2 b is triangle centre + ⟨(length b),0⟩;
 triangle 3 a is triangle 1 b;
 triangle 3 b is triangle 2 b;
 
@@ -22,4 +22,5 @@ picture children is [
 	(line [triangle 2])
 	(line [triangle 3])
 ];
+
 

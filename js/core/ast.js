@@ -65,8 +65,12 @@ Cadence.AST.Definition.prototype.hasErrors = Cadence.AST.hasErrors;
 
 Cadence.AST.Definition.prototype.addLHSPath = function(path) {
 	for (var i=0; i<path.components.length; i++) {
-		if (typeof path.components[i] == "object" && path.components[i].type == "variable") {
-			this.addLHSVariable(path.components[i].label);
+		if (typeof path.components[i] == "object") {
+			if (path.components[i].type == "variable") {
+				this.addLHSVariable(path.components[i].label);
+			} else if (path.components[i].type == "path") {
+				this.addLHSPath(path.components[i]);
+			}
 		} else {
 			this.addLHSLiteral(path.components[i]);
 		}

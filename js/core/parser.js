@@ -36,14 +36,22 @@ Cadence.Parser = function(code, imports) {
 
 Cadence.Parser.precedence = {
 	"OBSERVABLE": 0,
+	"NUMBER": 0,
+	"STRING": 0,
 	"*": 1,
+	"/": 1,
+	"%": 1,
 	"+": 2,
+	"-": 2,
 	",": 3,
+	"⟨": 4,
+	"⟩": 4
 };
 
 Cadence.Parser.precedenceOf = function(token) {
 	var prec = Cadence.Parser.precedence[token];
 	if (prec) return prec;
+	//console.log("UNKNOWN PREC: " + token);
 	return 0;
 }
 
@@ -465,16 +473,23 @@ Cadence.Parser.prototype.pPATH = function() {
 
 Cadence.Parser.prototype.pPATH2 = function(maxprec) {
 	var path = new Cadence.AST.Path();
-	var myprec = Cadence.Parser.precedenceOf(this.token);
+	var myprec = (this.token == "LABEL") ? Cadence.Parser.precedenceOf(this.data.value) : Cadence.Parser.precedenceOf(this.token);
 	var eqcount = 0;
 
+	if (myprec > maxprec) maxprec = myprec+1;
+	//myprec = 0;
+
 	while (this.token != "EOF") {
-		var prec = Cadence.Parser.precedenceOf(this.token);
+		var prec = (this.token == "LABEL") ? Cadence.Parser.precedenceOf(this.data.value) : Cadence.Parser.precedenceOf(this.token);
 		var npath;
 
-		if (prec >= maxprec) return path;
+		if (prec >= maxprec) {
+			//console.log("MAXPREC ON " + this.token);
+			return path;
+		}
 
 		if (prec > myprec) {
+			//console.log("MORE PREC ON " + this.token + ":" + prec + ","+myprec);
 			//myprec = prec;
 			npath = new Cadence.AST.Path();
 			if (path.components.length > 1) {
@@ -545,6 +560,8 @@ Cadence.Parser.prototype.pPATH2 = function(maxprec) {
 				path.addComponent(npath2.components[0]);
 			}
 		}
+
+		//myprec = prec;
 	}
 
 	return path;

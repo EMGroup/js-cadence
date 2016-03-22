@@ -165,7 +165,7 @@ Cadence.Stream.prototype.skipLine = function() {
  * Check if a character matches [a-zA-Z0-9_] or unicode...
  */
 Cadence.Stream.prototype.isAlphaNumeric = function(ch) {
-	return (ch >= 48 && ch <= 57) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == 95) || (ch >= 128); //(ch >= 0xc0);
+	return (ch >= 48 && ch <= 57) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == 95) || (ch >= 128 && ch < 8704); //(ch >= 0xc0);
 };
 
 
@@ -418,6 +418,11 @@ Cadence.Stream.prototype.readToken = function() {
 				return "~";
 	default: break; 
 	};
+
+	if (ch >= 8704) {
+		this.data.value = String.fromCharCode(ch);
+		return "LABEL";
+	}
 
 	this.unget();
 
