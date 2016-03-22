@@ -34,6 +34,20 @@ Cadence.Parser = function(code, imports) {
 }
 
 
+Cadence.Parser.precedence = {
+	"OBSERVABLE": 0,
+	"*": 1,
+	"+": 2,
+	",": 3,
+};
+
+Cadence.Parser.precedenceOf = function(token) {
+	var prec = Cadence.Parser.precedence[token];
+	if (prec) return prec;
+	return 0;
+}
+
+
 Cadence.Parser.prototype.parse = function() {
 	this.stream.position = 0;
 	// Get First Token;
@@ -424,10 +438,57 @@ Cadence.Parser.prototype.pDEFINITION = function() {
 	return definition;
 }
 
-Cadence.Parser.prototype.pPATH = function() {
+/*Cadence.Parser.prototype.pPATH = function() {
 	var path = new Cadence.AST.Path();
+	while (this.token != "EOF") {
+		var spath = this.pPATH2(-1);
+
+		//if (spath.components.length > 0)
+		path.components = path.components.concat(spath.components);
+
+		console.log(this.token);
+
+		//path.addComponent(spath);
+		switch(this.token) {
+		case ")":
+		case ";":
+		case "is":
+		case "when": return path;
+		}
+	}
+	return path;
+}*/
+
+Cadence.Parser.prototype.pPATH = function() {
+	return this.pPATH2(1000000);
+}
+
+Cadence.Parser.prototype.pPATH2 = function(maxprec) {
+	var path = new Cadence.AST.Path();
+	var myprec = Cadence.Parser.precedenceOf(this.token);
+	var eqcount = 0;
 
 	while (this.token != "EOF") {
+		var prec = Cadence.Parser.precedenceOf(this.token);
+		var npath;
+
+		if (prec >= maxprec) return path;
+
+		if (prec > myprec) {
+			//myprec = prec;
+			npath = new Cadence.AST.Path();
+			if (path.components.length > 1) {
+				npath.addComponent(path);
+			} else {
+				npath.addComponent(path.components[0]);
+			}
+			path = npath;
+		}
+		/* else {
+			eqcount++;
+		}*/
+		//lastprec = prec;
+
 		switch(this.token) {
 		case "VARIABLE"		:	path.addComponent({type: "variable", label: this.data.value});
 								this.next();
@@ -473,6 +534,16 @@ Cadence.Parser.prototype.pPATH = function() {
 		case ";"			:	return path;
 		default				:	path.addComponent(this.token);
 								this.next();
+		}
+
+		if (prec > myprec) {
+			//myprec = prec;
+			var npath2 = this.pPATH2(prec);
+			if (npath2.components.length > 1) {
+				path.addComponent(npath2)
+			} else {
+				path.addComponent(npath2.components[0]);
+			}
 		}
 	}
 

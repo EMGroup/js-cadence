@@ -481,7 +481,7 @@ function getStartCaretCharacterOffsetWithin(element) {
 
 			ast = new Cadence.Parser(intextarea.value);
 			ast.parse();
-			console.log(ast);
+			//console.log(ast);
 			highlighter.ast = ast;
 
 			runScript(lineno);
