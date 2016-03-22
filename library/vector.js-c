@@ -12,6 +12,8 @@ _vector3 X Y Z x is X;
 _vector3 X Y Z y is Y;
 _vector3 X Y Z z is Z;
 
+A to string is join [⟨ (A x), (A y) ⟩] ""	when A ∈ vectors2d;
+
 /* Vector Addition */
 A + B is vector (A x + B x) (A y + B y)					when A ∈ vectors2d ∧ B ∈ vectors2d;
 A + B is vector (A x + B x) (A y + B y) (A z + B z)		when A ∈ vectors3d ∧ B ∈ vectors3d;

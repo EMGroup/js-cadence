@@ -82,12 +82,13 @@
 				count++;
 				if (count > 40) break;
 				var ele = $('<div class="resultitem"></div>');
-				var val = Cadence.eval(value + " " + paths[i]+";");
+				var val = Cadence.eval(value + " " + paths[i]+" to string;");
+				if (val === undefined) val = Cadence.eval(value + " " + paths[i]+";");
 				//if (Array.isArray(val)) val = Cadence.prettyPath(val);
 				ele.html(paths[i] + " <span class=\"identity\">&#xf061;</span> "+val);
 				res.append(ele);
 			}
-		}, 200);
+		}, 400);
 
 		/*var starttime = Date.now();
 		setInterval(function() {
