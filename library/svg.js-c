@@ -1,7 +1,7 @@
 A ∈ svgelements is ${{ A instanceof SVGElement }}$;
 A ∉ svgelements is ${{ !(A instanceof SVGElement) }}$;
 
-svg element A B is ${{ (function (){ var ele = document.createElementNS("http://www.w3.org/2000/svg", A); ele.setAttribute("id", "HTMLDOM-"+((Array.isArray(B))?B.join("_"):B)); if (A == "svg") ele.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink"); console.log(ele); return ele; })() }}$;
+svg element A B is ${{ (function (){ var ele = document.createElementNS("http://www.w3.org/2000/svg", A); ele.setAttribute("id", "HTMLDOM-"+((Array.isArray(B))?B.join("_"):B)); if (A == "svg") ele.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink"); return ele; })() }}$;
 
 svg svg A is _ html (svg element svg A) A content;
 
