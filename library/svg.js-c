@@ -1,11 +1,11 @@
 A ∈ svgelements is ${{ A instanceof SVGElement }}$;
 A ∉ svgelements is ${{ !(A instanceof SVGElement) }}$;
 
-svg element A B is ${{ (function (){ console.log("SVGE: " + B); var ele = document.createElementNS("http://www.w3.org/2000/svg", A); ele.setAttribute("id", "HTMLDOM-"+((Array.isArray(B))?B.join("_"):B)); if (A == "svg") ele.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink"); return ele; })() }}$;
+svg element A B is ${{ (function (){ var ele = document.createElementNS("http://www.w3.org/2000/svg", A); ele.setAttribute("id", "HTMLDOM-"+((Array.isArray(B))?B.join("_"):B)); if (A == "svg") ele.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink"); console.log(ele); return ele; })() }}$;
 
 svg svg A is _ html (svg element svg A) A content;
 
-line A is _svgline (_svgline (_ html (svg element path A) A content) A shape) A colour;
+line A is _svgline (_svgline (svg element path A) A shape) A colour;
 _svgline A B shape is A attribute d ("M " + (B a x) + " " + (B a y) + " L " + (B b x) + " " + (B b y));
 _svgline A B colour is A attribute style ("stroke: " + (B colour) + "; stroke-width: " + (B width) + "px;");
 

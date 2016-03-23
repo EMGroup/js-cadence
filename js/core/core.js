@@ -53,6 +53,7 @@ Cadence.CacheEntry = function() {
 	this.value = undefined;
 	this.dependants = [];
 	this.expired = true;
+	this.node = undefined;
 }
 
 Cadence.CacheEntry.prototype.update = function(value) {
@@ -64,9 +65,19 @@ Cadence.CacheEntry.prototype.expire = function() {
 	if (this.expired) return;
 	this.expired = true;
 	var oldval = this.value;
-	this.value = this.part.evaluate(this, this.variables);
+
+	for (var j=0; j<this.node.parts.length; j++) {
+		var cond = (this.node.parts[j].condition) ? this.node.parts[j].condition.apply(this.node, this.variables) : false;
+		if (this.node.parts[j].condition === undefined || (cond && cond != "false")) {
+			this.value = this.node.parts[j].evaluate(this, this.variables);
+			break;
+		}
+	}
+
 	this.expired = false;
+	console.log("Cache value: " + this.value);
 	if (this.value != oldval) {
+		console.log("Cache expire");
 		var olddeps = this.dependants;
 		this.dependants = [];
 		for (var i=0; i<olddeps.length; i++) {
@@ -150,7 +161,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 							cache = new Cadence.CacheEntry();
 							Cadence.cache[pathstr] = cache;
 							cache.variables = variables;
-							cache.part = node.parts[j];
+							cache.node = node;
 						}
 
 						if (!(cache.expired)) {
@@ -251,11 +262,13 @@ Cadence.define = function(path, def, cond, dynamic) {
 	current.parts.unshift(new Cadence.Part(def, cond, Date.now(), dynamic));
 	current.expire();
 
-	var pathstr = Cadence.pathToString(path,path.length);
+	/*var pathstr = Cadence.pathToString(path,path.length);
+	console.log(pathstr);
 	var cache = Cadence.cache[pathstr];
 	if (cache) {
 		cache.expire();
-	}
+		console.log("EXPIRE CACHE");
+	}*/
 }
 
 Cadence.eval = function(str) {
