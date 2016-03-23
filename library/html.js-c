@@ -6,7 +6,7 @@ A attributeXLINK B C is ${{ (function() { A.setAttributeNS("http://www.w3.org/19
 
 /*html element appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$;*/
 A appendChild B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
-appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
+appendChild A B is ${{ (function() { console.log("APPENDCHILD"); A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
 
 A removeChild B is ${{ (function() { A.removeChild(B); return A;})() }}$ when (A ∈ domelements);
 A lastChild is ${{ A.lastChild }}$ when (A ∈ domelements);
@@ -15,10 +15,15 @@ html element A B is ${{ (function (){ var ele = document.createElement(A); ele.s
 html body is ${{ document.body }}$;
 html with id A is ${{ document.getElementById(A) }}$;
 
-A removeAll is A removeChild (A lastChild) removeAll when (A ∈ domelements) ∧ (A lastChild);
-A removeAll is A when (A ∈ domelements) ∧ (!(A lastChild));
+/*A removeAll is A removeChild (A lastChild) removeAll when (A ∈ domelements) ∧ (A lastChild);
+A removeAll is A when (A ∈ domelements) ∧ (!(A lastChild));*/
+
+A removeAll is ${{ (function() { console.log(A); while(A.lastChild) A.removeChild(A.lastChild); return A; })() }}$ when (A ∈ domelements);
+
+A addAll B is ${{ (function() { for (var i=0; i<B.length; i++) A.appendChild(B[i]); return A; })() }}$ when (A ∈ domelements);
 
 html div A is _ html (html element div A) A content;
-_ html A B content is foldl appendChild (A removeAll) (B children) when (A ∈ domelements) ∧ (B children);
+_ html A B content is  (A removeAll) addAll (B children) when (A ∈ domelements) ∧ (B children);*/
+/*_ html A B content is ${{ (function() { console.log(A); while(A.lastChild) A.removeChild(A.lastChild); var children = Cadence.search([B,"children"], origin); for (var i=0; i<children.length; i++) { console.log(children[i]); A.appendChild(children[i]); } return A; })() }}$ when (A ∈ domelements) ∧ (B children);*/
 _ html A B content is A when (A ∈ domelements) ∧ (!(B children));
 

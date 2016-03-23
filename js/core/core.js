@@ -37,7 +37,7 @@ Cadence.Entry.prototype.expire = function() {
 	if (!this.pattern) {
 		for (var i=0; i<this.parts.length; i++) {
 			var old = this.parts[i].cache;
-			if (this.parts[i].evaluate(this, []) !== old) changed = true;
+			if (this.parts[i].evaluate(this, []) != old) changed = true;
 		}
 	}
 	if (changed || this.pattern) {
@@ -66,7 +66,7 @@ Cadence.CacheEntry.prototype.expire = function() {
 	var oldval = this.value;
 	this.value = this.part.evaluate(this, this.variables);
 	this.expired = false;
-	if (this.value !== oldval) {
+	if (this.value != oldval) {
 		var olddeps = this.dependants;
 		this.dependants = [];
 		for (var i=0; i<olddeps.length; i++) {
@@ -156,6 +156,8 @@ Cadence.search = function(path, origin) { //, base, index) {
 						if (!(cache.expired)) {
 							//console.log("USE CACHE: " + pathstr);
 							result = cache.value;
+							node.addDependency(cache);
+							if (origin) cache.addDependency(origin);
 						} else {
 							result = node.parts[j].evaluate((node.pattern)?cache:node, variables);
 							cache.update(result);

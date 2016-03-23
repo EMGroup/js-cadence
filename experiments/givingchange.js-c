@@ -23,8 +23,7 @@ coin images 50 is "50p.jpg";
 coin images 100 is "pound.gif";
 coin images 200 is "2pounds.gif";
 
-coin image I x is 50 + I * 60;
-coin image I y is 50;
+coin image I position is vector (50 + I * 60) 50;
 coin image I width is 50;
 coin image I height is 50;
 coin image I href is "http://www.dcs.warwick.ac.uk/~jonny/ukcurrency/" + (coin images (coin list at I));
