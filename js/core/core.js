@@ -75,9 +75,8 @@ Cadence.CacheEntry.prototype.expire = function() {
 	}
 
 	this.expired = false;
-	console.log("Cache value: " + this.value);
+
 	if (this.value != oldval) {
-		console.log("Cache expire");
 		var olddeps = this.dependants;
 		this.dependants = [];
 		for (var i=0; i<olddeps.length; i++) {
