@@ -2,6 +2,7 @@ A ∈ domelements is ${{ A instanceof Element }}$;
 A ∉ domelements is ${{ !(A instanceof Element) }}$;
 
 A attribute B C is ${{ (function() { A.setAttribute(B, C); return A;})() }}$;
+A attributeXLINK B C is ${{ (function() { A.setAttributeNS("http://www.w3.org/1999/xlink", B, C); return A;})() }}$;
 
 /*html element appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$;*/
 A appendChild B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
