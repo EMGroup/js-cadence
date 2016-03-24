@@ -10,7 +10,12 @@ A = B is ${{ A == B }}$;
 A equals B is A = B;
 A not equals B is A ≠ B;
 
+/* Force a list to be evaluated instead of returned */
 eval A is A when (A ∉ lists);
 
+/* Ignore the LHS */
 discard A is [];
 A ";" B is B;
+
+/* Force root scope interpretation */
+::A is ${{ Cadence.search([A], origin) }}$;

@@ -1,0 +1,33 @@
+amount is 89;
+coin list is [50 20 10 5];
+
+denominations is [1 2 5 10 20 50 100 200];
+
+amount left is ::amount - sum(coin list);
+
+gtdenom A is 1 if (amount left >= A) else 0;
+allowed denominations is map gtdenom (::denominations);
+
+index of largest is sum(allowed denominations) - 1;
+
+largest allowed denomination is ::denominations at (index of largest);
+
+/* Visualisation */
+
+coin images 1 is "1p.gif";
+coin images 2 is "2p.gif";
+coin images 5 is "5p.gif";
+coin images 10 is "10p.gif";
+coin images 20 is "20p.jpg";
+coin images 50 is "50p.jpg";
+coin images 100 is "pound.gif";
+coin images 200 is "2pounds.gif";
+
+coin image I position is vector (50 + I * 60) 50;
+coin image I width is 50;
+coin image I height is 50;
+coin image I href is "http://www.dcs.warwick.ac.uk/~jonny/ukcurrency/" + (coin images (coin list at I));
+
+make image I is image [coin image I];
+picture children is generate [make image] 0 (coin list # - 1);
+
