@@ -15,12 +15,15 @@ Cadence.Part = function(def, cond, time, dynamic) {
 	this.dynamic = dynamic;
 	//this.dependants = [];
 	this.cache = undefined;
+	this.ineval = false;
 	//this.out_of_date = true;
 }
 
 Cadence.Part.prototype.evaluate = function(owner, variables) {
+	this.ineval = true;
 	var result = this.definition.apply(owner, variables);
 	this.cache = result;
+	this.ineval = false;
 	return result;
 }
 
@@ -44,7 +47,12 @@ Cadence.Entry.prototype.expire = function() {
 		var olddeps = this.dependants;
 		this.dependants = [];
 		for (var i=0; i<olddeps.length; i++) {
-			olddeps[i].expire();
+			if (olddeps[i] === this) {
+				var me = this;
+				setTimeout(function() { me.expire(); }, 50);
+			} else {
+				olddeps[i].expire();
+			}
 		}
 	}
 }
@@ -151,7 +159,6 @@ Cadence.search = function(path, origin) { //, base, index) {
 		for (var j=0; j<node.parts.length; j++) {
 			var cond = (node.parts[j].condition) ? node.parts[j].condition.apply(node, variables) : false;
 			if (node.parts[j].condition === undefined || (cond && cond != "false")) {
-				//console.log(path);
 				if (node.pattern) {
 					var pathstr = (node.parts[j].dynamic) ? undefined : Cadence.pathToString(path, i); //path.slice(0,i+1).join(" ");
 					if (pathstr) {

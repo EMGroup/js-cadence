@@ -1,5 +1,5 @@
-A if true else C is A;
-A if false else C is C;
+A if B else C is A when (B && true);
+A if B else C is C when !(B && true);
 
 
 true ? B : C is B;

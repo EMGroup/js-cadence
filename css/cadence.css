@@ -123,6 +123,39 @@ span.identity {
 	padding-right: 8px;
 }
 
+.iconfont {
+	font-family: "FontAwesome";
+}
+
+div.tool-buttons {
+	position: absolute;
+	top: 0;
+	height: 50px;
+	right: 250;
+	/*border-right: 1px solid #ddd;*/
+	padding-top: 8px;
+	padding-right: 20px;
+	box-sizing: border-box;
+	background: #eee; /*linear-gradient(to right, #eee, #f3f3f3);*/
+}
+
+button.toolbutton {
+	background: #f5f5f5; /*linear-gradient(#eee, #ddd);*/
+	color: #3465a4;
+	font-size: 12pt;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+button.toolbutton:hover {
+	background: white;
+}
+
 /** {
 	scrollbar-face-color: #BBBBBB;
 	scrollbar-track-color: #EEEEEE;	
