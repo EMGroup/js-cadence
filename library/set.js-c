@@ -6,24 +6,33 @@ A ∉ sets is ¬(A ∈ sets);
 A size is ${{ A[1].length }}$	when (A ∈ sets) ∧ (A at 1 ∈ lists);
 size A is ${{ A[1].length }}$	when (A ∈ sets) ∧ (A at 1 ∈ lists);
 
+{} is [_set []];
+{A} is [_set [A]]	when A ∉ lists;
 {A} is [_set A]		when A ∈ lists; /* Need to make A unique */
 {X : F} is [_set false X F];
 
-A ∈ B is ${{ B[1].indexOf(A) >= 0 }}$	when (B ∈ sets) ∧ (B at 1 ∈ lists);
+A to string is "{" + (A at 1 join ",") + "}" when A ∈ sets ∧ (A at 1 ∈ lists);
+
+A ∈ B is ${{ B[1].indexOf(A) >= 0 }}$	when (B ∈ sets) ∧ ((B at 1) ∈ lists);
 _expreplace A B C is C if (C != A) else B;
 
 A ∈ B is eval(map [_expreplace (B at 2) A] (B at 3)) when (B ∈ sets) ∧ (B# > 2);
 
-//A ⊂ B is
-//A ⊃ B is
-//A ⊆ B is
-//A ⊇ B is
+in A B is B ∈ A;
+A ⊂ B is (filter [in B] (A at 1))# = (A at 1 #) ∧ (A at 1 #) < (B at 1 #) when A ∈ sets ∧ B ∈ sets;
+A ⊃ B is B ⊂ A;
+
+A ⊆ B is (filter [in B] (A at 1))# = (A at 1 #) ∧ (A at 1 #) <= (B at 1 #) when A ∈ sets ∧ B ∈ sets;
+A ⊇ B is B ⊆ A;
+
+A ∪ B is [_set ((A at 1) concat (B at 1))] when A ∈ sets ∧ B ∈ sets;
+
 //A ⊄ B is
 //A ⊅ B is 
 //∀
 //∃
 //∄
 
-//A = ∅
-//∅ = A
+A = ∅ is A at 1 # = 0 when (B ∈ sets) ∧ ((B at 1) ∈ lists);
+∅ = A is A = ∅;
 

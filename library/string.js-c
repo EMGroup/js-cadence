@@ -15,3 +15,8 @@ A length is ${{ A.length }}$ when (A ∈ strings);
 length A is ${{ A.length }}$ when (A ∈ strings);
 
 A at B is ${{ A.charAt(B) }}$ when (A ∈ strings);
+
+A indexOf B is ${{ A.indexOf(B) }}$ when (A ∈ strings);
+
+A split B is ${{ A.split(B) }}$ when (A ∈ strings);
+A substring B C is ${{ A.substring(B,C) }}$ when (A ∈ strings);

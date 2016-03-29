@@ -13,9 +13,9 @@ A m is A				when A ∈ numbers;
 A cm is A / 100			when A ∈ numbers;
 A mm is A / 1000		when A ∈ numbers;
 A km is A * 1000		when A ∈ numbers;
-A' is A * 0.3048		when A ∈ numbers;
+/*A' is A * 0.3048		when A ∈ numbers;
 A'' is A * 0.0254		when A ∈ numbers;
-A' B'' is (A * 0.3048)+(B * 0.0254) when (A ∈ numbers) ∧ (B ∈ numbers);
+A' B'' is (A * 0.3048)+(B * 0.0254) when (A ∈ numbers) ∧ (B ∈ numbers);*/
 
 A g is A / 1000			when A ∈ numbers;
 A kg is A				when A ∈ numbers;

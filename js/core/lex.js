@@ -353,7 +353,7 @@ Cadence.Stream.prototype.readToken = function() {
 	case 38	:	if (this.peek() == 38) { this.skip(); return "&&"; }
 				if (this.peek() == 61) { this.skip(); return "&="; }
 				return "&";
-	case 39 :	this.parseCharacter(this.data); return "CHARACTER";
+	case 39 :	return "'"; //this.parseCharacter(this.data); return "CHARACTER";
 	case 40	:	return "(";
 	case 41	:	return ")";
 	case 42	:	if (this.peek() == 61) { this.skip(); return "*="; }

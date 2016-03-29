@@ -1,0 +1,13 @@
+isdigit 0 is true;
+isdigit 1 is true;
+isdigit 2 is true;
+isdigit 3 is true;
+isdigit 4 is true;
+isdigit 5 is true;
+isdigit 6 is true;
+isdigit 7 is true;
+isdigit 8 is true;
+isdigit 9 is true;
+isdigit A is false;
+
+A ∈ numbers2 is filter isdigit A # = A #;

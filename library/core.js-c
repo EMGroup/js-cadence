@@ -5,7 +5,8 @@ A != B is ${{ A != B }}$;
 A ≠ B is ${{ A != B }}$;
 A = B is ${{ A == B }}$;
 = A B is ${{ A == B }}$;
-//A = undefined is ${{ A === undefined }}$;
+A = undefined is ${{ A === undefined }}$;
+A != undefined is ${{ A !== undefined }}$;
 
 A equals B is A = B;
 A not equals B is A ≠ B;
@@ -19,3 +20,9 @@ A ";" B is B;
 
 /* Force root scope interpretation */
 ::A is ${{ Cadence.search([A], origin) }}$;
+
+A' is eval(A);
+A'' is A';
+A''' is A'';
+A'''' is A''';
+

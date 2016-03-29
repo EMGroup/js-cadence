@@ -24,6 +24,7 @@
 	<script src="./js/ui/interpreter.js"></script>
 	<script src="./js/ui/gutter.js"></script>
 	<script src="./js/ui/highlighter.js"></script>
+	<script src="./js/ui/subdialogs.js"></script>
 
 	<script>
 	Cadence.Storage.loadURL("library/core.js-c");
@@ -40,6 +41,10 @@
 
 	window.onload = function() {
 		Cadence.Storage.loadURL("library/svg.js-c");
+
+		$('.mainmenu').click(function() {
+			Cadence.UI.Dialogs.browseModels(document.body);
+		});
 
 		var sbox = Cadence.UI.makeScriptBox($("#cterminal").get(0));
 		Cadence.onoutput = function(res) {

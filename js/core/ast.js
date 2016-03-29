@@ -112,7 +112,7 @@ Cadence.AST.Definition.prototype.generate = function() {
 	for (var i=0; i<this.lhs.length; i++) {
 		var type = typeof this.lhs[i];
 		if (type == "object") {
-			lhs += "undefined";
+			lhs += "\"__VARIABLE__\"";
 			params += this.lhs[i].label+",";
 		} else {
 			if (type == "number" || type == "boolean") {

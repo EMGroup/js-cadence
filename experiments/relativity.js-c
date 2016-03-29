@@ -1,0 +1,17 @@
+the line is vector 6.3150 15.9400;
+
+my a is 2.4;
+my dir is true if (my dir = undefined) else (!(my dir) if ((my dir && my x < 50) || (!(my dir) && my x > 300)) else (my dir));
+my x is 100 if (my x = undefined) else ((my x - my a) if (my dir) else (my x + my a));
+point 0 is vector (my x) 83;
+//point 0 is vector 69 105;
+point A is point (A - 1) + the line;
+
+a line A a is point A;
+a line A b is point (A + 1);
+a line A width is 2;
+a line A colour is red;
+
+make line A is line [a line A];
+picture children is generate [make line] 0 20;
+

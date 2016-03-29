@@ -19,10 +19,10 @@ For example:
 my variable is 5;
 ```
 
-The above reduces to 5, as does the following but indirectly:
+Doing a search for `my variable` will reduce to 5, as does the following but indirectly:
 ```
 my variable 2 is my variable;
-``
+```
 
 If the original `my variable` pattern is subsequently changed then the
 `my variable 2` pattern also changes.

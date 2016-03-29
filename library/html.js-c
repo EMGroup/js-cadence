@@ -1,12 +1,12 @@
 A ∈ domelements is ${{ A instanceof Element }}$;
 A ∉ domelements is ${{ !(A instanceof Element) }}$;
 
-A attribute B C is ${{ (function() { A.setAttribute(B, C); return A;})() }}$;
+A attribute B C is ${{ (function() { A.setAttribute(B, C); return A;})() }}$ when (A ∈ domelements) ∧ (C != undefined);
 A attributeXLINK B C is ${{ (function() { A.setAttributeNS("http://www.w3.org/1999/xlink", B, C); return A;})() }}$;
 
 /*html element appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$;*/
-A appendChild B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
-appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements);
+A appendChild B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements) ∧ (B ∈ domelements);
+appendChild A B is ${{ (function() { A.appendChild(B); return A;})() }}$ when (A ∈ domelements) ∧ (B ∈ domelements);
 
 A removeChild B is ${{ (function() { A.removeChild(B); return A;})() }}$ when (A ∈ domelements);
 A lastChild is ${{ A.lastChild }}$ when (A ∈ domelements);
@@ -20,7 +20,7 @@ A removeAll is A when (A ∈ domelements) ∧ (!(A lastChild));*/
 
 A removeAll is ${{ (function() { while(A.lastChild) A.removeChild(A.lastChild); return A; })() }}$ when (A ∈ domelements);
 
-A addAll B is ${{ (function() { for (var i=0; i<B.length; i++) A.appendChild(B[i]); return A; })() }}$ when (A ∈ domelements);
+A addAll B is ${{ (function() { for (var i=0; i<B.length; i++) { if (B[i] instanceof Element) A.appendChild(B[i]); } return A; })() }}$ when (A ∈ domelements);
 
 html div A is _ html (html element div A) A content;
 _ html A B content is  (A removeAll) addAll (B children) when (A ∈ domelements) ∧ (B children);*/

@@ -1,5 +1,5 @@
-A ∈ lists is ${{ A instanceof Array }}$;
-A ∉ lists is ${{ !(A instanceof Array) }}$;
+A ∈ lists is ${{ A instanceof Array || typeof A == "string" }}$;
+A ∉ lists is ${{ !(A instanceof Array || typeof A == "string") }}$;
 
 /* All variations of getting a lists length */
 A # is ${{ A.length }}$ when A ∈ lists;

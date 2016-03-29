@@ -1,11 +1,16 @@
-A ∈ vectors2d is (A at 0 = _vector2);
-A ∈ vectors3d is (A at 0 = _vector3);
+/*A ∈ vectors2d is (A at 0 = _vector2);
+A ∈ vectors3d is (A at 0 = _vector3);*/
+
+A ∈ vectors2d is ${{ Array.isArray(A) && A[0] == "_vector2" }}$;
+A ∈ vectors3d is ${{ Array.isArray(A) && A[0] == "_vector3" }}$;
 
 ⟨ X,Y ⟩ is [_vector2 X Y]			when X ∈ ℝ ∧ Y ∈ ℝ;
 ⟨ X,Y,Z ⟩ is [_vector3 X Y Z]		when X ∈ ℝ ∧ Y ∈ ℝ ∧ Z ∈ ℝ;
 
-vector X Y is [_vector2 X Y]		when X ∈ ℝ ∧ Y ∈ ℝ;
-vector X Y Z is [_vector3 X Y Z]	when X ∈ ℝ ∧ Y ∈ ℝ ∧ Z ∈ ℝ;
+/*vector X Y is [_vector2 X Y]		when X ∈ ℝ ∧ Y ∈ ℝ;
+vector X Y Z is [_vector3 X Y Z]	when X ∈ ℝ ∧ Y ∈ ℝ ∧ Z ∈ ℝ;*/
+vector X Y is [_vector2 X Y]		when ${{ typeof X == "number" && typeof Y == "number" }}$;
+vector X Y Z is [_vector3 X Y Z]	when ${{ typeof X == "number" && typeof Y == "number" && typeof Z == "number" }}$;
 _vector2 X Y x is X;
 _vector2 X Y y is Y;
 _vector3 X Y Z x is X;
@@ -15,8 +20,10 @@ _vector3 X Y Z z is Z;
 A to string is join [⟨ (A x), (A y) ⟩] ""	when A ∈ vectors2d;
 
 /* Vector Addition */
-A + B is vector (A x + B x) (A y + B y)					when A ∈ vectors2d ∧ B ∈ vectors2d;
-A + B is vector (A x + B x) (A y + B y) (A z + B z)		when A ∈ vectors3d ∧ B ∈ vectors3d;
+/*A + B is vector (A x + B x) (A y + B y)					when A ∈ vectors2d ∧ B ∈ vectors2d;
+A + B is vector (A x + B x) (A y + B y) (A z + B z)		when A ∈ vectors3d ∧ B ∈ vectors3d;*/
+A + B is ${{ ["_vector2", A[1]+B[1], A[2]+B[2]] }}$		when ${{ Array.isArray(A) && A[0] == "_vector2" && Array.isArray(B) && B[0] == "_vector2" }}$;
+A + B is vector (A x + B x) (A y + B y) (A z + B z)		when ${{ Array.isArray(A) && A[0] == "_vector3" && Array.isArray(B) && B[0] == "_vector3" }}$;
 
 /* Vector Scaler Addition */
 V + X is vector (V x + X) (V y + X)						when V ∈ vectors2d ∧ X ∈ ℝ;

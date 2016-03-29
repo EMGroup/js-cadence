@@ -43,7 +43,7 @@ Cadence.concretePaths = function(path) {
 
 	function deepPath(base, node) {
 		for (var a in node) {
-			if (a !== undefined && a != "undefined" && node.hasOwnProperty(a)) {
+			if (a != "__VARIABLE__" && node.hasOwnProperty(a)) {
 				var merge = base.concat([a]);
 				if (node[a].parts.length > 0) {
 					res.push(merge);

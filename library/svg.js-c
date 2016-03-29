@@ -6,7 +6,7 @@ svg element A B is ${{ (function (){ var ele = document.createElementNS("http://
 svg svg A is _ html (svg element svg A) A content;
 
 line A is _svgline (_svgline (svg element path A) A shape) A colour;
-_svgline A B shape is A attribute d ("M " + (B a x) + " " + (B a y) + " L " + (B b x) + " " + (B b y));
+_svgline A B shape is A attribute d ("M " + (B a x) + " " + (B a y) + " L " + (B b x) + " " + (B b y)) when (B a ∈ vectors2d) ∧ (B b ∈ vectors2d);
 _svgline A B colour is A attribute style ("stroke: " + (B colour) + "; stroke-width: " + (B width) + "px;");
 
 image A is (((((svg element image A)
@@ -23,5 +23,5 @@ A _svgimage B href is A attributeXLINK href (B href);
 picture children is [];
 
 svg root is svg svg picture attribute width "100%" attribute height "100%";
-html with id svgout appendChild (svg root);
+svg generator is html with id svgout appendChild (svg root);
 
