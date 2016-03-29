@@ -20,7 +20,7 @@ Cadence.UI.Dialogs.browseModels = function(element, callback) {
 
 			(function(entry) {
 			ele.click(function() {
-				callback(entry.url);
+				callback(entry.url, entry.title);
 				element.removeChild(obscurer.get(0));
 			});
 			})(entry);
