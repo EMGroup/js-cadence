@@ -71,7 +71,7 @@ Cadence.Entry.prototype.expire = function() {
 
 Cadence.expirequeue = [];
 Cadence.swapqueue = [];
-Cadence.cyclerate = 50;
+Cadence.cyclerate = 0;
 Cadence.timeout = undefined;
 Cadence.pause = false;
 
@@ -338,6 +338,7 @@ Cadence.define = function(path, def, cond, dynamic) {
 		current.parts.unshift(new Cadence.Part(def, cond, Date.now(), dynamic));
 	}
 	current.expire();
+	//current.cache = current.newcache;
 }
 
 Cadence.eval = function(str) {

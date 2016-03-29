@@ -42,9 +42,22 @@
 	window.onload = function() {
 		Cadence.Storage.loadURL("library/svg.js-c");
 
-		$('.mainmenu').click(function() {
-			Cadence.UI.Dialogs.browseModels(document.body);
-		});
+		function showProjects() {
+			Cadence.UI.Dialogs.browseModels(document.body, function(url, title) {
+				if (url) {
+					$.get(url, function(data) {
+						sbox.setValue(data);
+						sbox.execute();
+						$('.titletext').html(title);
+					});
+				} else {
+					sbox.setValue("");
+					$('.titletext').html("Untitled");
+				}
+			});
+		}
+
+		$('.mainmenu').click(showProjects);
 
 		var sbox = Cadence.UI.makeScriptBox($("#cterminal").get(0));
 		Cadence.onoutput = function(res) {
@@ -57,7 +70,8 @@
 			}*/
 		}
 
-		Cadence.log("Welcome to the Cadence demo page...");
+		var file = URLUtil.getParameterByName("file");
+		if (!file) showProjects();
 
 		setInterval(function() {
 			var value = $("#search").get(0).value;
@@ -69,7 +83,7 @@
 				for (var i=0; i<paths.length; i++) {
 					Cadence.initial[paths[i]] = true;
 				}
-				var file = URLUtil.getParameterByName("file");
+
 				if (file) {
 					$.get(file, function(data) {
 						sbox.setValue(data);
