@@ -42,15 +42,29 @@
 	window.onload = function() {
 		Cadence.Storage.loadURL("library/svg.js-c");
 
+		$('#cbrowse').resizable({ handles: 'w'});
+
+		$("#button-pause").click(function() {
+			Cadence.pause = !Cadence.pause;
+			if (!Cadence.pause) {
+				$("#button-pause").html("&#xf04c;");
+				Cadence.processQueues();
+			} else {
+				$("#button-pause").html("&#xf04b;");
+			}
+		});
+
 		function showProjects() {
 			Cadence.UI.Dialogs.browseModels(document.body, function(url, title) {
 				if (url) {
+					//Cadence.reset();
 					$.get(url, function(data) {
 						sbox.setValue(data);
 						sbox.execute();
 						$('.titletext').html(title);
 					});
 				} else {
+					//Cadence.reset();
 					sbox.setValue("");
 					$('.titletext').html("Untitled");
 				}
@@ -121,18 +135,19 @@
 
 <body>
 <div id="menubar" style="position: absolute; top: 0; left: 0; right: 0; height: 50px;">
-<div class="mainmenu">&#xf0c2;</div>
+<div class="mainmenu" title="Browse Projects">&#xf0c2;</div>
 <div class="titletext">JS-Cadence</div>
 	<div class="tool-buttons">
-		<button class="toolbutton" style="font-weight: bold;">π</button>
-		<button class="toolbutton iconfont">&#xf121;</button>
-		<button class="toolbutton iconfont">&#xf1e5;</button>
+		<button id="button-pause" class="toolbutton iconfont" title="Pause">&#xf04c;</button>
+		<button class="toolbutton" title="Insert Symbols" style="font-weight: bold;">π</button>
+		<button class="toolbutton iconfont" title="Show/hide Script">&#xf121;</button>
+		<button class="toolbutton iconfont" title="Show/hide State">&#xf1e5;</button>
 	</div>
 </div>
 <div id="cterminal" style="position: absolute; top: 50px; left: 30px; width: 670px; bottom: 0;">
 </div>
 <div id="svgout" style="position: absolute; top: 50px; right: 250px; bottom: 0; left: 700px;"></div>
-<div id="cbrowse" style="position: absolute; top: 50px; width: 250px; right: 0; bottom: 0;">
+<div id="cbrowse">
 <div id="searchouter"><input type="text" id="search" placeholder="Search..."></input></div>
 <div id="searchresults"></div>
 </div>

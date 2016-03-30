@@ -6,7 +6,7 @@ Cadence.UI.projects = undefined;
 
 Cadence.UI.Dialogs.browseModels = function(element, callback) {
 	var obscurer = $('<div class="cadence-obscurer noselect"></div>');
-	var content = $('<div class="cadence-dialog cadence-dialog-browse noselect"><div class="cadence-dialog-title">Projects</div><div class="cadence-dialog-plisting"></div></div>');
+	var content = $('<div class="cadence-dialog cadence-dialog-browse noselect"><div class="cadence-dialog-title"><span class="cadence-project">&#xf07b;</span> Projects</div><div class="cadence-dialog-plisting"></div></div>');
 	var plisting = content.find(".cadence-dialog-plisting");
 
 	function updateContents() {

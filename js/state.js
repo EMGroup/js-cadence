@@ -56,6 +56,36 @@ Cadence.concretePaths = function(path) {
 	return res;
 }
 
+Cadence.removeAllConcrete = function() {
+	this.expirequeue = [];
+	this.swapqueue = [];
+
+	function deepPath(node) {
+		var vtotal = 0;
+		for (var a in node) {
+			if (a != "__VARIABLE__" && node.hasOwnProperty(a)) {
+				var vcount = deepPath(node[a].children);
+				if (vcount == 0) {
+					delete node[a];
+				}
+			} else {
+				vtotal++;
+			}
+		}
+		return vtotal;
+	}
+	deepPath(this.tree);
+}
+
+Cadence.clearCache = function() {
+	this.cache = {};
+}
+
+Cadence.reset = function() {
+	this.removeAllConcrete();
+	this.clearCache();
+}
+
 Cadence.prettyPath = function(path) {
 	var res = "";
 	for (var i=0; i<path.length; i++) {
