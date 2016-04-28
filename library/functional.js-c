@@ -36,7 +36,11 @@ filter X A 0 is []									when (A ∈ lists) ∧ (not (X (A at (A# - 1))));
 filter X A I is concat [(A at (A# - I - 1))] (filter X A (I - 1))	when (A ∈ lists) ∧ (I ∈ numbers) ∧ (X (A at (A# - I - 1)));
 filter X A I is filter X A (I - 1)	when (A ∈ lists) ∧ (I ∈ numbers) ∧ (not (X (A at (A# - I - 1))));
 
-generate F S E  is generate F S E S								when (S ∈ numbers) ∧ (E ∈ numbers);
-generate F S E I is [(F I)]										when (I = E);
-generate F S E I is prepend (generate F S E (I + 1)) (F I)		when (I < E);
+generate F S E  is generate1 F S E 1 S				when (S ∈ numbers) ∧ (E ∈ numbers);
+generate F E is generate1 F 0 E 1 0					when (E ∈ numbers);
+generate F S E X is generate1 F S E X S				when (S ∈ numbers) ∧ (E ∈ numbers);
+
+generate1 F S E X I is [(F E)]										when (I >= E);
+generate1 F S E X I is prepend (generate1 F S E X (I + X)) (F I)		when (I < E);
+
 

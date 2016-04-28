@@ -27,6 +27,8 @@ A at B is ${{ A[B] }}$ when (A ∈ lists) ∧ (B ∈ numbers);
 A , B is [A B] when A ∉ lists;
 A , B is append A B when A ∈ lists;
 
+A to string is ${{ JSON.stringify(A) }}$ when A ∈ lists;
+
 /* Sort */
 _midvalue A is A at (⎣(A# / 2)⎦);
 sort A is A when A# = 1;

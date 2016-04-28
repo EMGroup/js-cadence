@@ -65,6 +65,13 @@ math sum A is sum A;
 sum A is foldl (+) 0 A when (A ∈ lists);
 ∑ A is sum A;
 
-math π is 3.141592653589793;
+∑₁ I L is foldl (+) 0 (generate L I); 
 
+math π is 3.141592653589793;
+math e is 2.718281828;
+
+0 ! is 1;
+N ! is N * ((N - 1) !) when N ∈ ℝ;
+
+-A is 0 - A when A ∈ numbers; 
 

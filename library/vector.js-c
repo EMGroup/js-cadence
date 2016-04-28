@@ -3,19 +3,26 @@ A ∈ vectors3d is (A at 0 = _vector3);*/
 
 A ∈ vectors2d is ${{ Array.isArray(A) && A[0] == "_vector2" }}$;
 A ∈ vectors3d is ${{ Array.isArray(A) && A[0] == "_vector3" }}$;
+A ∈ vectors4d is ${{ Array.isArray(A) && A[0] == "_vector4" }}$;
 
 ⟨ X,Y ⟩ is [_vector2 X Y]			when X ∈ ℝ ∧ Y ∈ ℝ;
 ⟨ X,Y,Z ⟩ is [_vector3 X Y Z]		when X ∈ ℝ ∧ Y ∈ ℝ ∧ Z ∈ ℝ;
+⟨ X,Y,Z,T ⟩ is [_vector4 X Y Z T]	when X ∈ ℝ ∧ Y ∈ ℝ ∧ Z ∈ ℝ ∧ T ∈ ℝ;
 
 /*vector X Y is [_vector2 X Y]		when X ∈ ℝ ∧ Y ∈ ℝ;
 vector X Y Z is [_vector3 X Y Z]	when X ∈ ℝ ∧ Y ∈ ℝ ∧ Z ∈ ℝ;*/
 vector X Y is [_vector2 X Y]		when ${{ typeof X == "number" && typeof Y == "number" }}$;
 vector X Y Z is [_vector3 X Y Z]	when ${{ typeof X == "number" && typeof Y == "number" && typeof Z == "number" }}$;
+vector X Y Z T is [_vector4 X Y Z T]	when ${{ typeof X == "number" && typeof Y == "number" && typeof Z == "number" && typeof T == "number"}}$;
 _vector2 X Y x is X;
 _vector2 X Y y is Y;
 _vector3 X Y Z x is X;
 _vector3 X Y Z y is Y;
 _vector3 X Y Z z is Z;
+_vector4 X Y Z T x is X;
+_vector4 X Y Z T y is Y;
+_vector4 X Y Z T z is Z;
+_vector4 X Y Z T t is T;
 
 A to string is join [⟨ (A x), (A y) ⟩] ""	when A ∈ vectors2d;
 

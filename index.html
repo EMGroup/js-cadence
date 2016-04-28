@@ -116,7 +116,8 @@
 				if (count > 40) break;
 				var ele = $('<div class="resultitem"></div>');
 				//console.log(Cadence.parsePath(value + " " + paths[i]));
-				var val = Cadence.search(Cadence.parsePath(value + " " + paths[i]+" to string"));
+				var path = Cadence.parsePath(value + " " + paths[i]+" to string");
+				var val = Cadence._search(path);
 				if (val === undefined) val = Cadence.search(Cadence.parsePath(value + " " + paths[i]));
 				//if (Array.isArray(val)) val = Cadence.prettyPath(val);
 				ele.html(paths[i] + " <span class=\"identity\">&#xf061;</span> "+val);

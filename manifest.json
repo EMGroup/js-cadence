@@ -20,5 +20,11 @@
 		"image": "images/givingchange.png",
 		"author": "Nicolas Pope",
 		"url": "experiments/givingchange2.js-c"
+	},
+	{
+		"title": "Quantum Harmonics",
+		"image": "images/qharmonic.png",
+		"author": "Nicolas Pope",
+		"url": "experiments/quantum/harmonic.js-c"
 	}
 ]

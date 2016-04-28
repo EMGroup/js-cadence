@@ -186,7 +186,7 @@ Cadence._unflattenSearch = function(path, origin) {
 	// No match in unflattened form. So flatten first nested element
 	for (var i=0; i<path.length; i++) {
 		if (path[i] instanceof Array) {
-			var s = Cadence.search(path[i], origin);
+			var s = Cadence._search(path[i], origin);
 			if (s === undefined) {
 				//console.log("Flatten: " + JSON.stringify(path));
 				path = path.slice(0,i).concat(path[i]).concat(path.slice(i+1));
@@ -195,7 +195,7 @@ Cadence._unflattenSearch = function(path, origin) {
 				path[i] = s;
 			}
 			//console.log("Flattened: " + JSON.stringify(s));
-			return Cadence.search(path, origin);
+			return Cadence._search(path, origin);
 		}
 	}
 }
@@ -236,7 +236,12 @@ Cadence._interpretNode = function(node, part, origin, variables) {
 	return result;
 }
 
-Cadence.search = function(path, origin) { //, base, index) {
+Cadence.search = function(path, origin) {
+	var result = this._search(path,origin);
+	return result;
+}
+
+Cadence._search = function(path, origin) { //, base, index) {
 	//var current = this.tree;
 	var node;
 	var i = 0;
@@ -278,7 +283,7 @@ Cadence.search = function(path, origin) { //, base, index) {
 				if (path.length > 1 && i < path.length) {
 					var npath = Array.prototype.concat.apply([result],path.slice(i));
 					//console.log(npath);
-					return Cadence.search(npath, origin);
+					return Cadence._search(npath, origin);
 				} else {
 					return result;
 				}

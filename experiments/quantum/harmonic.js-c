@@ -1,0 +1,24 @@
+psi N E is 1 / (√ (2 ^ N * N!)) * ((1 / math π) ^ 0.25) * hermite N E * math e ^ (0 - (E ^ 2 / 2));
+hermite 0 X is 1;
+hermite 1 X is 2 * X;
+hermite 2 X is 4 * X ^ 2 - 2;
+hermite 3 X is 8 * X ^ 3 - 12 * X;
+hermite 4 X is 16 * X ^ 4 - 48 * X ^ 2 + 12;
+hermite 5 X is 32 * X ^ 5 - 160 * X ^ 3 + 120 * X;
+hermite 6 X is 64 * X ^ 6 - 480 * X ^ 4 + 720 * X ^ 2 - 120;
+hermite 7 X is 128 * X ^ 7 - 1344 * X ^ 5 + 3360 * X ^ 3 - 1680 * X;
+
+total width is 745;
+line density is 120;
+line width is total width / line density;
+range resolution is 12 / total width * line width * 2;
+
+energy level is 4;
+
+a line A a is vector (A * line width) (100 - (psi (energy level) (A * range resolution - 6) * 100));
+a line A b is vector ((A + 1) * line width) (100 - (psi (energy level) ((A + 1) * range resolution - 6) * 100));
+a line A width is 2;
+a line A colour is red;
+
+make line A is line [a line A];
+picture children is generate [make line] 0 (line density);
