@@ -15,10 +15,15 @@ range resolution is 12 / total width * line width * 2;
 
 energy level is 4;
 
-a line A a is vector (A * line width) (100 - (psi (energy level) (A * range resolution - 6) * 100));
-a line A b is vector ((A + 1) * line width) (100 - (psi (energy level) ((A + 1) * range resolution - 6) * 100));
-a line A width is 2;
-a line A colour is red;
+a line A B a is vector (A * line width) (500 - (B * 100) - (psi B (A * range resolution - 6) * 50));
+a line A B b is vector ((A + 1) * line width) (500 - (B * 100) - (psi B ((A + 1) * range resolution - 6) * 50));
+a line A B width is 2;
+a line A B colour is red;
 
-make line A is line [a line A];
-picture children is generate [make line] 0 (line density);
+make line B A is line [a line A B];
+picture children is
+	generate [make line 4] 0 (line density) ∙
+	(generate [make line 3] 0 (line density)) ∙
+	(generate [make line 2] 0 (line density)) ∙
+	(generate [make line 1] 0 (line density)) ∙
+	(generate [make line 0] 0 (line density));
